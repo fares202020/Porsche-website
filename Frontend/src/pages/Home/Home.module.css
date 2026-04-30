@@ -1,74 +1,58 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Raleway:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Raleway:wght@300;400;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Michroma&display=swap');
 
+/* ─────────────────────────────────────────────
+   BASE
+───────────────────────────────────────────── */
 .home {
   font-family: 'Michroma', sans-serif;
   overflow-x: hidden;
 }
 
+/* ─────────────────────────────────────────────
+   HERO  (unchanged)
+───────────────────────────────────────────── */
 .hero {
   height: 100vh;
-  width: 100%;
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  /* 👈 move content to left */
-  padding: 0 80px;
-  color: white;
-  overflow: hidden;
-
-
 }
 
 .heroVideo {
   position: absolute;
-  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: 0;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
 }
 
 .heroContent {
   position: relative;
   z-index: 2;
-  text-align: left;
-  /* 👈 important */
-  max-width: 600px;
+  color: white;
+  top: 50%;
+  transform: translateY(-50%);
+  padding-left: 80px;
 }
 
 .heroTitle {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(3.5rem, 8vw, 6rem);
-  font-weight: 400;
-  /* Bebas Neue is already bold by design */
-  letter-spacing: 4px;
-  line-height: 1;
+  font-family: 'Bebas Neue';
+  font-size: 5rem;
   display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
+  gap: 12px;
 }
 
-.word {
+.heroTitle span {
   opacity: 0;
   transform: translateY(40px);
-  animation: slideUp 0.6s ease forwards;
-}
-
-@keyframes slideUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  animation: fadeUp 0.6s forwards;
 }
 
 .heroSub {
-  font-family: 'Raleway', sans-serif;
-  font-weight: 300;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  font-size: 14px;
   margin: 20px 0;
   opacity: 0;
   animation: fadeUp 0.6s ease 1s forwards;
@@ -80,25 +64,15 @@
   padding: 12px 28px;
   border: none;
   cursor: pointer;
-  font-weight: 600;
   opacity: 0;
   animation: fadeUp 0.6s ease 1.4s forwards;
 }
 
-.btnDark:hover {
-  background: #222;
-}
-
-@keyframes fadeUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* CATEGORIES */
+/* ─────────────────────────────────────────────
+   CATEGORIES  (unchanged)
+───────────────────────────────────────────── */
 .categories {
-  padding: 70px 50px;
+  padding: 80px;
   text-align: center;
 }
 
@@ -110,10 +84,9 @@
 
 .categoryCard {
   position: relative;
-  height: 200px;
-  border-radius: 12px;
+  height: 220px;
   overflow: hidden;
-  cursor: pointer;
+  border-radius: 16px;
 }
 
 .categoryCard img {
@@ -130,238 +103,244 @@
 .overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+  background: rgba(0, 0, 0, 0.3);
 }
 
-.categoryInfo {
+.categoryCard span {
   position: absolute;
   bottom: 15px;
   left: 15px;
-  right: 15px;
   color: white;
-  display: flex;
-  justify-content: space-between;
-  font-weight: 600;
 }
 
-/* MODELS */
+/* ─────────────────────────────────────────────
+   MODELS SECTION
+───────────────────────────────────────────── */
 .models {
-  background: #F5F5F5;
-  padding: 120px 0;
+  padding: 100px 0 80px;
   text-align: center;
-  position: relative;
+  background: linear-gradient(180deg, #f8f8f8, #eeeeee);
   overflow: hidden;
 }
 
-.sideLabel {
-  position: absolute;
-  top: 60px;
-  font-family: 'Raleway', sans-serif;
-  left: 80px;
-  font-size: 48px;
-  font-weight: 400;
-  letter-spacing: 1px;
-
+.modelsEyebrow {
+  font-size: 11px;
+  letter-spacing: 5px;
+  color: #999;
+  margin-bottom: 8px;
 }
 
+.modelsTitle {
+  font-size: 42px;
+  letter-spacing: 6px;
+  margin-bottom: 60px;
+  color: #1a1a1a;
+}
 
-@keyframes titleSlideIn {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
+/* ─────────────────────────────────────────────
+   CAROUSEL STAGE
+   The stage clips overflow so only left/right
+   peek edges bleed in from the sides.
+───────────────────────────────────────────── */
+.carouselStage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
 
+/* ─────────────────────────────────────────────
+   CARS TRACK  – the scrollable row
+───────────────────────────────────────────── */
+.carsTrack {
+  position: relative;
+  width: 100%;
+  height: 340px;
+  overflow: hidden;
+}
+
+/* ─────────────────────────────────────────────
+   INDIVIDUAL CAR SLIDE
+───────────────────────────────────────────── */
+.carSlide {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 580px;
+  height: 340px;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity   0.55s cubic-bezier(0.22, 1, 0.36, 1),
+              filter    0.55s ease;
+  will-change: transform, opacity;
+}
+
+.carImg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* CENTER – fully visible, front layer */
+.carCenter {
+  transform: translateX(-50%) scale(1);
+  opacity: 1;
+  z-index: 3;
+  filter: none;
+  cursor: default;
+}
+
+/* LEFT – peeking from the left */
+.carLeft {
+  transform: translateX(calc(-50% - 480px)) scale(0.78);
+  opacity: 0.55;
+  z-index: 2;
+  filter: grayscale(35%);
+  cursor: pointer;
+}
+
+/* RIGHT – peeking from the right */
+.carRight {
+  transform: translateX(calc(-50% + 480px)) scale(0.78);
+  opacity: 0.55;
+  z-index: 2;
+  filter: grayscale(35%);
+  cursor: pointer;
+}
+
+/* HIDDEN – off-screen, no interaction */
+.carHidden {
+  transform: translateX(-50%) scale(0.6);
+  opacity: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ─────────────────────────────────────────────
+   ARROW BUTTONS
+   Positioned inside the stage, over the peeks
+───────────────────────────────────────────── */
+.arrowBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0, 0, 0, 0.15);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(6px);
+  color: #1a1a1a;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, border-color 0.2s, transform 0.15s;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.arrowBtn:hover {
+  background: rgba(255, 255, 255, 1);
+  border-color: rgba(0, 0, 0, 0.35);
+  transform: translateY(-50%) scale(1.08);
+}
+
+.arrowBtn:active {
+  transform: translateY(-50%) scale(0.96);
+}
+
+.arrowBtnLeft {
+  left: 32px;
+}
+
+.arrowBtnRight {
+  right: 32px;
+}
+
+/* ─────────────────────────────────────────────
+   MODEL INFO  (name + desc below car)
+───────────────────────────────────────────── */
+.modelInfo {
+  margin-top: 36px;
+  animation: fadeInfoUp 0.5s ease both;
+}
+
+.modelName {
+  font-family: 'Michroma', sans-serif;
+  font-size: 28px;
+  letter-spacing: 3px;
+  color: #1a1a1a;
+  margin-bottom: 10px;
+}
+
+.modelDesc {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  color: #666;
+  max-width: 440px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* ─────────────────────────────────────────────
+   TABS / DOTS
+───────────────────────────────────────────── */
+.tabs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  margin-top: 40px;
+}
+
+.tabBtn {
+  font-family: 'Michroma', sans-serif;
+  font-size: 13px;
+  letter-spacing: 2px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 4px;
+  color: #aaa;
+  cursor: pointer;
+  transition: color 0.25s, border-color 0.25s;
+}
+
+.tabBtn:hover {
+  color: #555;
+}
+
+.activeTab {
+  color: #1a1a1a !important;
+  border-bottom: 2px solid #c9a400;
+}
+
+/* ─────────────────────────────────────────────
+   ANIMATIONS
+───────────────────────────────────────────── */
+@keyframes fadeUp {
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-
-
-@keyframes slideInX {
+@keyframes fadeInfoUp {
   from {
     opacity: 0;
-    transform: translateX(100px);
+    transform: translateY(16px);
   }
-
   to {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateY(0);
   }
-}
-
-.animateSlideIn {
-  animation: slideInX 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-}
-
-@keyframes simpleFade {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 0.15;
-  }
-}
-
-.animateFade {
-  animation: simpleFade 0.8s ease forwards;
-}
-
-/* CAROUSEL */
-.carousel {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.modelContent {
-  position: relative;
-  z-index: 2;
-}
-
-
-
-.btnLight {
-  border: 1px solid #000;
-  padding: 12px 28px;
-  text-decoration: none;
-  color: #000;
-  font-weight: 600;
-}
-
-.btnLight:hover {
-  background: #000;
-  color: #fff;
-}
-
-.modelImg {
-  width: 700px;
-  max-width: 90%;
-  transition: transform 0.4s ease, filter 0.4s ease;
-}
-
-.modelImg:hover {
-  transform: scale(1.08);
-  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.25));
-}
-
-.modelButtons {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  margin-top: 40px;
-}
-
-.btnExplore {
-  background: #000;
-  color: #fff;
-  padding: 16px 40px;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 14px;
-  letter-spacing: 0.5px;
-  border: 2px solid #000;
-  transition: all 0.3s ease;
-  min-width: 220px;
-  text-align: center;
-  display: inline-block;
-}
-
-.btnExplore:hover {
-  background: white;
-  border-color: black;
-  color: black;
-}
-
-.btnDiscover {
-  background: transparent;
-  color: #000;
-  padding: 16px 40px;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 14px;
-  letter-spacing: 0.5px;
-  border: 2px solid #000;
-  transition: all 0.3s ease;
-  min-width: 220px;
-  text-align: center;
-  display: inline-block;
-}
-
-.btnDiscover:hover {
-  background: #000;
-  color: #fff;
-}
-
-/* SIDE CARS */
-.sideCarLeft,
-.sideCarRight {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 520px;
-  opacity: 0.15;
-  filter: grayscale(100%);
-}
-
-.sideCarLeft {
-  left: -140px;
-}
-
-.sideCarRight {
-  right: -140px;
-}
-
-.sideCarLeft img,
-.sideCarRight img {
-  width: 100%;
-}
-
-/* TABS */
-.modelTabs {
-  margin-top: 40px;
-  display: flex;
-  justify-content: center;
-  gap: 50px;
-}
-
-.modelTab {
-  background: none;
-  border: none;
-  font-weight: 600;
-  color: #888;
-  cursor: pointer;
-  padding-bottom: 8px;
-  border-bottom: 2px solid transparent;
-}
-
-.modelTab:hover {
-  color: #000;
-}
-
-.active {
-  color: #000;
-  border-bottom: 2px solid #c9a400;
-}
-
-/* ARROWS */
-.arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 30px;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-.left {
-  left: 40px;
-}
-
-.right {
-  right: 40px;
 }
