@@ -125,6 +125,8 @@
 
 .modelsEyebrow {
   font-size: 11px;
+  text-align: left;
+  padding-left: 80px;
   letter-spacing: 5px;
   color: #999;
   margin-bottom: 8px;
@@ -133,36 +135,31 @@
 .modelsTitle {
   font-size: 42px;
   letter-spacing: 6px;
+  padding-left: 80px;
+  text-align: left;
   margin-bottom: 60px;
   color: #1a1a1a;
 }
 
-/* ─────────────────────────────────────────────
-   CAROUSEL STAGE
-   The stage clips overflow so only left/right
-   peek edges bleed in from the sides.
-───────────────────────────────────────────── */
+
 .carouselStage {
   position: relative;
   display: flex;
+  overflow: hidden;
   align-items: center;
   justify-content: center;
   width: 100%;
 }
 
-/* ─────────────────────────────────────────────
-   CARS TRACK  – the scrollable row
-───────────────────────────────────────────── */
+
 .carsTrack {
   position: relative;
   width: 100%;
-  height: 340px;
-  overflow: hidden;
+  height: 420px;
+  overflow: visible;
 }
 
-/* ─────────────────────────────────────────────
-   INDIVIDUAL CAR SLIDE
-───────────────────────────────────────────── */
+
 .carSlide {
   position: absolute;
   top: 0;
@@ -170,8 +167,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 580px;
-  height: 340px;
+  width: 720px;
+  height: 420px;
   transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
               opacity   0.55s cubic-bezier(0.22, 1, 0.36, 1),
               filter    0.55s ease;
@@ -186,34 +183,34 @@
   user-select: none;
 }
 
-/* CENTER – fully visible, front layer */
+
 .carCenter {
-  transform: translateX(-50%) scale(1);
+  transform: translateX(-50%) scale(1.15);
   opacity: 1;
   z-index: 3;
   filter: none;
   cursor: default;
 }
 
-/* LEFT – peeking from the left */
+
 .carLeft {
-   transform: translateX(calc(-50% - 600px)) scale(0.78);
+   transform: translateX(calc(-50% - 900px)) scale(0.78);
   opacity: 0.55;
   z-index: 2;
   filter: grayscale(35%);
   cursor: pointer;
 }
 
-/* RIGHT – peeking from the right */
+
 .carRight {
-  transform: translateX(calc(-50% + 600px)) scale(0.78);
+  transform: translateX(calc(-50% + 900px)) scale(0.78);
   opacity: 0.55;
   z-index: 2;
   filter: grayscale(35%);
   cursor: pointer;
 }
 
-/* HIDDEN – off-screen, no interaction */
+
 .carHidden {
   transform: translateX(-50%) scale(0.6);
   opacity: 0;
@@ -221,10 +218,7 @@
   pointer-events: none;
 }
 
-/* ─────────────────────────────────────────────
-   ARROW BUTTONS
-   Positioned inside the stage, over the peeks
-───────────────────────────────────────────── */
+
 .arrowBtn {
   position: absolute;
   top: 50%;
@@ -265,9 +259,7 @@
   right: 32px;
 }
 
-/* ─────────────────────────────────────────────
-   MODEL INFO  (name + desc below car)
-───────────────────────────────────────────── */
+
 .modelInfo {
   margin-top: 36px;
   animation: fadeInfoUp 0.5s ease both;
@@ -291,9 +283,7 @@
   line-height: 1.7;
 }
 
-/* ─────────────────────────────────────────────
-   TABS / DOTS
-───────────────────────────────────────────── */
+
 .tabs {
   display: flex;
   align-items: center;
