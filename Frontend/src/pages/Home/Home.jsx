@@ -153,17 +153,11 @@ export default function Home() {
         </div>
 
         {/* Dot tabs */}
-        <div className={styles.tabs}>
-          {models.map((m, i) => (
-            <button
-              key={i}
-              onClick={() => goTo(i)}
-              className={`${styles.tabBtn} ${i === active ? styles.activeTab : ""}`}
-            >
-              {m.name}
-            </button>
-          ))}
-        </div>
+       <div className={styles.tabs}>
+  <span className={styles.activeTab}>
+    {models[active].name}
+  </span>
+</div>
       </section>
 
     </div>

@@ -197,7 +197,7 @@
 
 /* LEFT – peeking from the left */
 .carLeft {
-  transform: translateX(calc(-50% - 480px)) scale(0.78);
+   transform: translateX(calc(-50% - 600px)) scale(0.78);
   opacity: 0.55;
   z-index: 2;
   filter: grayscale(35%);
@@ -206,7 +206,7 @@
 
 /* RIGHT – peeking from the right */
 .carRight {
-  transform: translateX(calc(-50% + 480px)) scale(0.78);
+  transform: translateX(calc(-50% + 600px)) scale(0.78);
   opacity: 0.55;
   z-index: 2;
   filter: grayscale(35%);
