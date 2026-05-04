@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import styles from "./Home.module.css";
 
 import pv from "../../assets/icons/Porsche 911 GT3 RS.mp4";
@@ -40,10 +40,39 @@ const models = [
   },
 ];
 
+/* ── Custom hook: fires once when element enters viewport ── */
+function useInView(options = {}) {
+  const ref = useRef(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.disconnect(); // animate only once
+        }
+      },
+      { threshold: 0.15, ...options }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return [ref, inView];
+}
+
 export default function Home() {
   const [active, setActive] = useState(0);
   const [animating, setAnimating] = useState(false);
   const [infoKey, setInfoKey] = useState(0);
+  const [dark, setDark] = useState(false);
+
+  // Scroll-trigger refs
+  const [catRef, catInView] = useInView();
+  const [modRef, modInView] = useInView();
 
   const total = models.length;
 
@@ -68,9 +97,18 @@ export default function Home() {
   };
 
   return (
-    <div className={styles.home}>
+    <div className={`${styles.home} ${dark ? styles.dark : ""}`}>
 
-      {/* ── HERO (unchanged) ── */}
+      {/* ── Dark Mode Toggle ── */}
+      <button
+        className={styles.darkToggle}
+        onClick={() => setDark((d) => !d)}
+        aria-label="Toggle dark mode"
+      >
+        {dark ? "☀" : "☾"}
+      </button>
+
+      {/* ── HERO ── */}
       <section className={styles.hero}>
         <video autoPlay muted loop playsInline className={styles.heroVideo}>
           <source src={pv} type="video/mp4" />
@@ -89,12 +127,19 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── CATEGORIES (unchanged) ── */}
-      <section className={styles.categories}>
-        <h2>Shop by Category</h2>
+      {/* ── CATEGORIES ── */}
+      <section
+        className={`${styles.categories} ${catInView ? styles.sectionVisible : ""}`}
+        ref={catRef}
+      >
+        <h2 className={styles.sectionHeading}>Shop by Category</h2>
         <div className={styles.categoryGrid}>
-          {categories.map((cat) => (
-            <div key={cat.label} className={styles.categoryCard}>
+          {categories.map((cat, i) => (
+            <div
+              key={cat.label}
+              className={`${styles.categoryCard} ${catInView ? styles.cardVisible : ""}`}
+              style={{ "--card-delay": `${0.2 + i * 0.18}s` }}
+            >
               <img src={cat.img} alt={cat.label} />
               <div className={styles.overlay}></div>
               <span>{cat.label}</span>
@@ -103,15 +148,24 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── MODELS (redesigned) ── */}
-      <section className={styles.models}>
-        <p className={styles.modelsEyebrow}>OUR LINEUP</p>
-        <h2 className={styles.modelsTitle}>MODELS</h2>
+      {/* ── MODELS ── */}
+      <section
+        className={`${styles.models} ${modInView ? styles.sectionVisible : ""}`}
+        ref={modRef}
+      >
+        <p
+          className={`${styles.modelsEyebrow} ${modInView ? styles.eyebrowVisible : ""}`}
+        >
+          OUR LINEUP
+        </p>
+        <h2
+          className={`${styles.modelsTitle} ${modInView ? styles.titleVisible : ""}`}
+        >
+          MODELS
+        </h2>
 
         {/* Carousel stage */}
         <div className={styles.carouselStage}>
-
-          {/* Prev arrow */}
           <button
             className={`${styles.arrowBtn} ${styles.arrowBtnLeft}`}
             onClick={prev}
@@ -120,14 +174,14 @@ export default function Home() {
             ‹
           </button>
 
-          {/* Cars track */}
           <div className={styles.carsTrack}>
             {models.map((m, i) => {
               const pos = getPosition(i);
               return (
                 <div
                   key={i}
-                  className={`${styles.carSlide} ${styles[pos]}`}
+                  className={`${styles.carSlide} ${styles[pos]} ${modInView ? styles.carVisible : ""}`}
+                  style={{ "--car-delay": `${0.4 + i * 0.18}s` }}
                   onClick={() => pos !== "carCenter" && goTo(i)}
                 >
                   <img src={m.img} alt={m.name} className={styles.carImg} />
@@ -136,7 +190,6 @@ export default function Home() {
             })}
           </div>
 
-          {/* Next arrow */}
           <button
             className={`${styles.arrowBtn} ${styles.arrowBtnRight}`}
             onClick={next}
@@ -146,20 +199,25 @@ export default function Home() {
           </button>
         </div>
 
-        {/* Model info below */}
+        {/* Model info */}
         <div className={styles.modelInfo} key={infoKey}>
           <h3 className={styles.modelName}>{models[active].title}</h3>
           <p className={styles.modelDesc}>{models[active].desc}</p>
         </div>
 
-        {/* Dot tabs */}
-       <div className={styles.tabs}>
-  <span className={styles.activeTab}>
-    {models[active].name}
-  </span>
-</div>
-      </section>
+        {/* Active label */}
+        <div className={styles.tabs}>
+          <span className={styles.activeTab}>{models[active].name}</span>
+        </div>
 
+        {/* CTA Buttons */}
+        <div
+          className={`${styles.modelCtas} ${modInView ? styles.ctasVisible : ""}`}
+        >
+          <button className={styles.ctaPrimary}>EXPLORE THE MODEL</button>
+          <button className={styles.ctaOutline}>DISCOVER MORE</button>
+        </div>
+      </section>
     </div>
   );
 }
