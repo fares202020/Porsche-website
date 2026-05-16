@@ -1,4 +1,7 @@
+// Home.jsx
+
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./Home.module.css";
 
 import pv from "../../assets/icons/Porsche 911 GT3 RS.mp4";
@@ -25,52 +28,72 @@ const models = [
     img: img911,
     title: "Porsche 911",
     desc: "Timeless sports car with iconic design and performance.",
+    explorePath: "/models/911",
+    discoverPath: "/discover/911",
   },
   {
     name: "718",
     img: cayman,
     title: "Porsche 718",
     desc: "Pure driving experience with mid-engine precision.",
+    explorePath: "/models/718",
+    discoverPath: "/discover/718",
   },
   {
     name: "Cayenne",
     img: cayenee,
     title: "Porsche Cayenne",
     desc: "Luxury SUV with sports DNA.",
+    explorePath: "/models/cayenne",
+    discoverPath: "/discover/cayenne",
   },
 ];
 
-/* ── Custom hook: fires once when element enters viewport ── */
 function useInView(options = {}) {
   const ref = useRef(null);
   const [inView, setInView] = useState(false);
 
+  
+  const optionsRef = useRef(options);
+
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+
+    
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight) {
+      setInView(true);
+      return;
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setInView(true);
-          observer.disconnect(); // animate only once
+          observer.disconnect();
         }
       },
-      { threshold: 0.15, ...options }
+      {
+        threshold: 0.1,
+        ...optionsRef.current,
+      }
     );
+
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
+  }, []); 
 
   return [ref, inView];
 }
 
 export default function Home() {
+  const navigate = useNavigate();
+
   const [active, setActive] = useState(0);
   const [animating, setAnimating] = useState(false);
   const [infoKey, setInfoKey] = useState(0);
-  const [dark, setDark] = useState(false);
 
-  // Scroll-trigger refs
   const [catRef, catInView] = useInView();
   const [modRef, modInView] = useInView();
 
@@ -83,7 +106,7 @@ export default function Home() {
       setActive(index);
       setInfoKey((k) => k + 1);
       setAnimating(false);
-    }, 400);
+    }, 650);
   };
 
   const next = () => goTo((active + 1) % total);
@@ -97,79 +120,86 @@ export default function Home() {
   };
 
   return (
-    <div className={`${styles.home} ${dark ? styles.dark : ""}`}>
-
-      {/* ── Dark Mode Toggle ── */}
-      <button
-        className={styles.darkToggle}
-        onClick={() => setDark((d) => !d)}
-        aria-label="Toggle dark mode"
-      >
-        {dark ? "☀" : "☾"}
-      </button>
-
-      {/* ── HERO ── */}
+    <div className={styles.home}>
+      {/* HERO */}
       <section className={styles.hero}>
-        <video autoPlay muted loop playsInline className={styles.heroVideo}>
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className={styles.heroVideo}
+        >
           <source src={pv} type="video/mp4" />
         </video>
-        <div className={styles.heroOverlay}></div>
+
+        {/* FIX: fallback background so hero is never blank if video fails */}
+        <div className={styles.heroOverlay} />
+
         <div className={styles.heroContent}>
           <h1 className={styles.heroTitle}>
             {"Pure Driving Emotion".split(" ").map((word, i) => (
-              <span key={i} style={{ animationDelay: `${i * 0.3}s` }}>
+              <span
+                key={i}
+                style={{ animationDelay: `${i * 0.3}s` }}
+              >
                 {word}
               </span>
             ))}
           </h1>
-          <p className={styles.heroSub}>Built for performance. Driven by passion.</p>
+
+          <p className={styles.heroSub}>
+            Built for performance. Driven by passion.
+          </p>
+
           <button className={styles.btnDark}>SHOP NOW</button>
         </div>
       </section>
 
-      {/* ── CATEGORIES ── */}
+      {/* CATEGORIES */}
       <section
-        className={`${styles.categories} ${catInView ? styles.sectionVisible : ""}`}
         ref={catRef}
+        className={`${styles.categories} ${catInView ? styles.sectionVisible : ""}`}
       >
         <h2 className={styles.sectionHeading}>Shop by Category</h2>
+
         <div className={styles.categoryGrid}>
           {categories.map((cat, i) => (
             <div
               key={cat.label}
               className={`${styles.categoryCard} ${catInView ? styles.cardVisible : ""}`}
-              style={{ "--card-delay": `${0.2 + i * 0.18}s` }}
+              style={{ "--card-delay": `${0.2 + i * 0.15}s` }}
             >
               <img src={cat.img} alt={cat.label} />
-              <div className={styles.overlay}></div>
+              <div className={styles.overlay} />
               <span>{cat.label}</span>
             </div>
           ))}
         </div>
       </section>
 
-      {/* ── MODELS ── */}
+      {/* MODELS */}
       <section
-        className={`${styles.models} ${modInView ? styles.sectionVisible : ""}`}
         ref={modRef}
+        className={`${styles.models} ${modInView ? styles.sectionVisible : ""}`}
       >
         <p
           className={`${styles.modelsEyebrow} ${modInView ? styles.eyebrowVisible : ""}`}
         >
           OUR LINEUP
         </p>
+
         <h2
           className={`${styles.modelsTitle} ${modInView ? styles.titleVisible : ""}`}
         >
           MODELS
         </h2>
 
-        {/* Carousel stage */}
+        {/* CAROUSEL */}
         <div className={styles.carouselStage}>
           <button
             className={`${styles.arrowBtn} ${styles.arrowBtnLeft}`}
             onClick={prev}
-            aria-label="Previous model"
           >
             ‹
           </button>
@@ -180,11 +210,17 @@ export default function Home() {
               return (
                 <div
                   key={i}
-                  className={`${styles.carSlide} ${styles[pos]} ${modInView ? styles.carVisible : ""}`}
-                  style={{ "--car-delay": `${0.4 + i * 0.18}s` }}
                   onClick={() => pos !== "carCenter" && goTo(i)}
+                  className={`${styles.carSlide} ${styles[pos]} ${
+                    modInView ? styles.carVisible : ""
+                  }`}
+                  style={{ "--car-delay": `${0.5 + i * 0.2}s` }}
                 >
-                  <img src={m.img} alt={m.name} className={styles.carImg} />
+                  <img
+                    src={m.img}
+                    alt={m.name}
+                    className={styles.carImg}
+                  />
                 </div>
               );
             })}
@@ -193,29 +229,39 @@ export default function Home() {
           <button
             className={`${styles.arrowBtn} ${styles.arrowBtnRight}`}
             onClick={next}
-            aria-label="Next model"
           >
             ›
           </button>
         </div>
 
-        {/* Model info */}
-        <div className={styles.modelInfo} key={infoKey}>
+        {/* INFO */}
+        <div key={infoKey} className={styles.modelInfo}>
           <h3 className={styles.modelName}>{models[active].title}</h3>
           <p className={styles.modelDesc}>{models[active].desc}</p>
         </div>
 
-        {/* Active label */}
+        {/* TAB */}
         <div className={styles.tabs}>
           <span className={styles.activeTab}>{models[active].name}</span>
         </div>
 
-        {/* CTA Buttons */}
+        {/* BUTTONS */}
         <div
           className={`${styles.modelCtas} ${modInView ? styles.ctasVisible : ""}`}
         >
-          <button className={styles.ctaPrimary}>EXPLORE THE MODEL</button>
-          <button className={styles.ctaOutline}>DISCOVER MORE</button>
+          <button
+            className={styles.ctaPrimary}
+            onClick={() => navigate(models[active].explorePath)}
+          >
+            EXPLORE THE MODEL
+          </button>
+
+          <button
+            className={styles.ctaOutline}
+            onClick={() => navigate(models[active].discoverPath)}
+          >
+            DISCOVER MORE
+          </button>
         </div>
       </section>
     </div>
