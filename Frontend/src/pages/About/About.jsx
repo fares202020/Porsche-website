@@ -7,10 +7,10 @@ const About = () => {
   return (
     <>
     <div style={{ background: "#fff" }}>
-      <Navbar />
+      <Navbar transparent={true} />
 
       {/* Hero Section */}
-      <section className="position-relative" style={{ height: "60vh", background: "black" }}>
+      <section className="position-relative" style={{ height: "100vh", background: "black" }}>
         <img
           src={wallpaper}
           alt="Porsche"

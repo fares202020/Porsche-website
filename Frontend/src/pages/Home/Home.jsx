@@ -52,7 +52,7 @@ export default function Home() {
 
   return (
     <>
-    <Navbar  />
+    <Navbar transparent={true} />
     <div className={styles.home}>
       {/* HERO */}
       <section className={styles.hero}>

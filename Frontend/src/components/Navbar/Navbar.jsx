@@ -2,23 +2,38 @@
 import styles from "./Navbar.module.css";import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
-export default function Navbar() {
+export default function Navbar({ transparent = false }) {
+  const navClass = `${styles.navbarCustom} ${
+    transparent ? styles.transparentNavbar : styles.defaultNavbar
+  } navbar container-fluid`;
+
+  const brandClass = `${
+    transparent ? styles.transparentBrand : styles.defaultBrand
+  } navbar-brand h1 col fs-3 mx-4`;
+
+  const linkClass = `${
+    transparent ? styles.transparentLink : styles.defaultLink
+  } nav-link mx-4 fs-6 p-1`;
+
+  const iconClass = `${
+    transparent ? styles.transparentIcon : styles.defaultIcon
+  } fa-solid fa-user fs-5`;
 
   return (
-    <nav className="navbar bg-white border-bottom border-secondary container-fluid">
+    <nav className={navClass}>
       
-      <a className="navbar-brand h1 col fs-3 mx-4" href="/">
+      <a className={brandClass} href="/">
         Porsche
       </a>
 
       <div className="col d-flex justify-content-center align-items-center">
-        <a className={`nav-link mx-4 fs-6 p-1 ${styles.linkHover || ""}`} href="/">
+        <a className={linkClass} href="/">
           Home
         </a>
-        <a className={`nav-link mx-4 fs-6 p-1 ${styles.linkHover || ""}`} href="/shop">
+        <a className={linkClass} href="/shop">
           Shop
         </a>
-        <a className={`nav-link mx-4 fs-6 p-1 ${styles.linkHover || ""}`} href="/about">
+        <a className={linkClass} href="/about">
           About
         </a>
       </div>
@@ -32,7 +47,7 @@ export default function Navbar() {
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            <i className={`fa-solid fa-user fs-5 ${styles.iconHover}`}></i> 
+            <i className={iconClass}></i> 
           </a>
 
           <ul className="dropdown-menu dropdown-menu-end">
