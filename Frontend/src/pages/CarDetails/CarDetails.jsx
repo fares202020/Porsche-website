@@ -2,10 +2,9 @@ import styles from "./CarDetails.module.css";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import Loader from "../../components/Loader/Loader";
-import React, { useRef, useEffect, Suspense } from "react";
+import React, { useRef, useEffect, Suspense, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useGLTF, OrbitControls, Environment } from "@react-three/drei";
-import { useState } from "react";
 import * as THREE from "three";
 import wheel1 from "../../assets/images/wheel_type1.png";
 import wheel2 from "../../assets/images/wheel_type2.png";
@@ -88,7 +87,6 @@ export const WheelSelector = ({ setWheel }) => {
             }}
           />
 
-          {/* clickable card */}
           <label
             htmlFor={wheel.id}
             className={`btn d-flex align-items-center justify-content-center border rounded p-2  ${selected === wheel.id ? "border-black bg-secondary" : "border-secondary"}`}
@@ -111,22 +109,57 @@ export const WheelSelector = ({ setWheel }) => {
 };
 
 function SceneButtons({ scenes, setCameraTarget }) {
+  const carouselRef = useRef(null);
+
+  const scrollScenes = (direction) => {
+    carouselRef.current?.scrollBy({
+      left: direction * 260,
+      behavior: "smooth",
+    });
+  };
+
   return (
-    <div className="d-flex flex-wrap justify-content-start gap-3 mt-3">
-      {scenes.map((scene, i) => (
-        <button
-          key={i}
-          className="btn p-0 rounded-3 overflow-hidden"
-          onClick={() =>
-            setCameraTarget({
-              position: [...scene.position], // 👈 new array reference
-              lookAt: [...scene.target],
-            })
-          }
-        >
-          <img src={scene.img} alt={`scene ${i + 1}`} />
-        </button>
-      ))}
+    <div className={styles.sceneCarousel}>
+      <button
+        type="button"
+        className={`${styles.sceneNav} ${styles.sceneNavLeft}`}
+        aria-label="Previous preview angle"
+        onClick={() => scrollScenes(-1)}
+      >
+        <i className="fa-solid fa-chevron-left" aria-hidden="true" />
+      </button>
+
+      <div className={styles.sceneTrack} ref={carouselRef}>
+        {scenes.map((scene, i) => (
+          <button
+            key={i}
+            type="button"
+            className={styles.sceneButton}
+            onClick={() =>
+              setCameraTarget({
+                position: [...scene.position],
+                lookAt: [...scene.target],
+              })
+            }
+            aria-label={`Preview angle ${i + 1}`}
+          >
+            <img
+              className={styles.sceneImage}
+              src={scene.img}
+              alt={`Scene ${i + 1}`}
+            />
+          </button>
+        ))}
+      </div>
+
+      <button
+        type="button"
+        className={`${styles.sceneNav} ${styles.sceneNavRight}`}
+        aria-label="Next preview angle"
+        onClick={() => scrollScenes(1)}
+      >
+        <i className="fa-solid fa-chevron-right" aria-hidden="true" />
+      </button>
     </div>
   );
 }
@@ -134,10 +167,6 @@ function SceneButtons({ scenes, setCameraTarget }) {
 function PorscheModel({ color, wheel }) {
   const gltf = useGLTF("/porsche model.glb");
   const modelRef = useRef();
-  const { camera } = useThree();
-  useFrame(() => {
-    console.log(camera.position);
-  });
 
   useEffect(() => {
     if (!gltf.nodes) return;
@@ -209,18 +238,16 @@ function CameraAnimator({ targetPosition, targetLookAt, orbitRef }) {
     lookVec.current.set(...targetLookAt);
     isAnimating.current = true;
     if (orbitRef.current) orbitRef.current.enabled = false;
-  }, [targetPosition, targetLookAt]);
+  }, [targetPosition, targetLookAt, orbitRef]);
 
   useFrame(() => {
     if (!isAnimating.current) return;
 
-    // Lerp camera position
     camera.position.lerp(posVec.current, 0.03);
 
-    // ✅ Let OrbitControls handle the rotation by lerping its target
     if (orbitRef.current) {
       orbitRef.current.target.lerp(lookVec.current, 0.03);
-      orbitRef.current.update(); // 👈 this makes the camera look at the target correctly
+      orbitRef.current.update();
     }
 
     const distance = camera.position.distanceTo(posVec.current);
@@ -249,12 +276,12 @@ export default function CarDetails() {
   return (
     <>
       <Navbar />
-      <main className="d-flex justify-content-center flex-column flex-sm-row w-100 my-5 gap-4">
-        <div className="col-sm-7 col-11">
-          <div className="position-sticky" style={{ top: "3rem" }}>
-            <div className={`rounded-4 ${styles["model-container"] || ""}`}>
+      <main className={styles.pageShell}>
+        <section className={styles.previewPanel}>
+          <div className={styles.previewSticky}>
+            <div className={styles.modelContainer}>
               <Canvas
-                className="rounded-3"
+                className={styles.modelCanvas}
                 camera={{ position: [1.95, 0.51, 4.37], fov: 50 }}
               >
                 <Suspense fallback={<Loader />}>
@@ -272,18 +299,20 @@ export default function CarDetails() {
                 />
                 <OrbitControls
                   ref={orbitRef}
-                  minPolarAngle={Math.PI / 6} // minimum vertical angle
-                  maxPolarAngle={Math.PI / 2} // maximum vertical angle
-                  minDistance={0} // closest zoom
-                  maxDistance={5} // farthest zoom
+                  minPolarAngle={Math.PI / 6}
+                  maxPolarAngle={Math.PI / 2}
+                  minDistance={0}
+                  maxDistance={5}
                 />
               </Canvas>
             </div>
-            <SceneButtons scenes={scenes} setCameraTarget={setCameraTarget} />
           </div>
-        </div>
-        <div className="col-sm-4 col-11 d-flex flex-column gap-4">
-          <div className="bg-white p-4 rounded-4">
+
+          <SceneButtons scenes={scenes} setCameraTarget={setCameraTarget} />
+        </section>
+
+        <section className={styles.detailsColumn}>
+          <div className={styles.detailsCard}>
             <h1>911 Carrera</h1>
             <p className="text-secondary">2026 model</p>
             <h5>Price</h5>
@@ -303,7 +332,8 @@ export default function CarDetails() {
               Place Order
             </button>
           </div>
-          <div className="bg-white p-4 rounded-4">
+
+          <div className={styles.detailsCard}>
             <h5 className="mb-4">Full Specifications</h5>
             <div className="d-flex">
               <span className="text-secondary">Horsepower</span>
@@ -325,7 +355,7 @@ export default function CarDetails() {
               <span className="ms-auto">4</span>
             </div>
           </div>
-        </div>
+        </section>
       </main>
       <Footer />
     </>
