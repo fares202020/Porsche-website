@@ -19,16 +19,16 @@ const CATEGORIES = ["All", "SUV", "Sports", "Electric", "Sedan"];
 const YEARS = ["All", "2024", "2025", "2026"];
 
 const CARS = [
-  { id: 1, name: "911 GT3 RS", year: "2026", fuel: "Gasoline", seats: "2", price: 412000, category: "Sports", image: imageMap["GT3_RS"] },
-  { id: 2, name: "Taycan", year: "2025", fuel: "Electric", seats: "4", price: 130000, category: "Electric", image: imageMap["Taycan"] },
-  { id: 3, name: "Macan", year: "2026", fuel: "Gasoline", seats: "4", price: 90000, category: "SUV", image: imageMap["Macan"] },
-  { id: 4, name: "911 Carrera", year: "2026", fuel: "Gasoline", seats: "2", price: 185000, category: "Sedan", image: imageMap["911_Carrera"] },
-  { id: 5, name: "Taycan Turbo S", year: "2025", fuel: "Electric", seats: "4", price: 280000, category: "Electric", image: imageMap["Taycan_TurboS"] },
-  { id: 6, name: "Macan Electric", year: "2026", fuel: "Electric", seats: "4", price: 90000, category: "SUV", image: imageMap["Macan_Electric"] },
-  { id: 7, name: "Macan GTS", year: "2024", fuel: "Gasoline", seats: "4", price: 135000, category: "SUV", image: imageMap["Macan_GTS"] },
-  { id: 8, name: "Macan Turbo Electric", year: "2026", fuel: "Electric", seats: "4", price: 155000, category: "SUV", image: imageMap["Macan_TurboE"] },
-  { id: 9, name: "911 Targa 4 GTS", year: "2025", fuel: "Gasoline", seats: "2", price: 330000, category: "Sedan", image: imageMap["Targa_4GTS"] },
-  { id: 10, name: "911 Turbo S Cabriolet", year: "2026", fuel: "Gasoline", seats: "2", price: 450000, category: "Sports", image: imageMap["Turbo_S"] },
+  { id: 1, name: "911 GT3 RS", year: "2026", fuel: "Gasoline", seats: "2", price: 412000, category: "Sports", image: imageMap["GT3_RS"], status: "In Stock" },
+  { id: 2, name: "Taycan", year: "2025", fuel: "Electric", seats: "4", price: 130000, category: "Electric", image: imageMap["Taycan"], status: "In Stock" },
+  { id: 3, name: "Macan", year: "2026", fuel: "Gasoline", seats: "4", price: 90000, category: "SUV", image: imageMap["Macan"], status: "In Stock" },
+  { id: 4, name: "911 Carrera", year: "2026", fuel: "Gasoline", seats: "2", price: 185000, category: "Sedan", image: imageMap["911_Carrera"], status: "In Stock" },
+  { id: 5, name: "Taycan Turbo S", year: "2025", fuel: "Electric", seats: "4", price: 280000, category: "Electric", image: imageMap["Taycan_TurboS"], status: "In Stock" },
+  { id: 6, name: "Macan Electric", year: "2026", fuel: "Electric", seats: "4", price: 90000, category: "SUV", image: imageMap["Macan_Electric"], status: "Out of Stock" },
+  { id: 7, name: "Macan GTS", year: "2024", fuel: "Gasoline", seats: "4", price: 135000, category: "SUV", image: imageMap["Macan_GTS"], status: "In Stock" },
+  { id: 8, name: "Macan Turbo Electric", year: "2026", fuel: "Electric", seats: "4", price: 155000, category: "SUV", image: imageMap["Macan_TurboE"], status: "In Stock" },
+  { id: 9, name: "911 Targa 4 GTS", year: "2025", fuel: "Gasoline", seats: "2", price: 330000, category: "Sedan", image: imageMap["Targa_4GTS"], status: "In Stock" },
+  { id: 10, name: "911 Turbo S Cabriolet", year: "2026", fuel: "Gasoline", seats: "2", price: 450000, category: "Sports", image: imageMap["Turbo_S"], status: "In Stock" },
 ];
 
 
@@ -176,6 +176,7 @@ export default function CarListing() {
                   seats={car.seats}
                   price={car.price}
                   image={car.image}
+                  status={car.status}
                 />
               ))}
             </div>

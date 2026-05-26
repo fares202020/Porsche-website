@@ -17,13 +17,18 @@ function fuleIcon(fuel) {
 
 
 
-export default function CarCard({ name, year, fuel, seats, price, image }) {
+export default function CarCard({ name, year, fuel, seats, price, image, status = "In Stock" }) {
+  const isOutOfStock = status === "Out of Stock";
+
   return (
     <div className="col">
       <div className={`${styles.carCard} bg-white rounded-3 border h-100 d-flex flex-column overflow-hidden`}>
         <div className="p-3 pb-0">
           <div className={`${styles.carName} mb-1 fw-bold fs-5`}>{name}</div>
           <div className={`${styles.carImgWrap} rounded-2 mb-2`}>
+            {isOutOfStock ? (
+              <span className={styles.outOfStockBadge}>Out of Stock</span>
+            ) : null}
             <img src={image} alt={name} />
           </div>
           <div className="d-flex justify-content-between mb-1" style={{ fontSize: "0.8rem", color: "#666" }}>
