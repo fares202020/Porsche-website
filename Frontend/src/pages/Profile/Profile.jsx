@@ -1,265 +1,333 @@
-import styles from './Profile.module.css';
-import { useState } from 'react';
+import { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
+import AuthField from "../../components/Auth/AuthField";
+import Footer from "../../components/Footer/Footer";
+import Navbar from "../../components/Navbar/Navbar";
+import styles from "./Profile.module.css";
 
-import Footer from '../../components/Footer/Footer';
-import Navbar from '../../components/Navbar/Navbar';
-import { OrdersContent } from '../Orders/Orders';
+const initialProfileData = {
+  fullName: "",
+};
+
+const initialProfileErrors = {
+  fullName: "",
+};
+
+const initialPasswordData = {
+  currentPassword: "",
+  newPassword: "",
+  confirmPassword: "",
+};
+
+const initialPasswordErrors = {
+  currentPassword: "",
+  newPassword: "",
+  confirmPassword: "",
+};
+
+const initialProfileTouched = {
+  fullName: false,
+};
+
+const initialPasswordTouched = {
+  currentPassword: false,
+  newPassword: false,
+  confirmPassword: false,
+};
+
+function validateProfileForm(values) {
+  const nextErrors = {
+    fullName: "",
+  };
+
+  if (!values.fullName.trim()) {
+    nextErrors.fullName = "Full name is required.";
+  }
+
+  return nextErrors;
+}
+
+function validatePasswordForm(values) {
+  const nextErrors = {
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  };
+
+  if (!values.currentPassword.trim()) {
+    nextErrors.currentPassword = "Please enter your current password.";
+  }
+
+  if (!values.newPassword.trim()) {
+    nextErrors.newPassword = "Please create a new password.";
+  } else if (values.newPassword.length < 8) {
+    nextErrors.newPassword = "Password must be at least 8 characters.";
+  }
+
+  if (!values.confirmPassword.trim()) {
+    nextErrors.confirmPassword = "Please confirm your password.";
+  } else if (values.newPassword !== values.confirmPassword) {
+    nextErrors.confirmPassword = "Passwords do not match.";
+  }
+
+  return nextErrors;
+}
+
+function getVisibleError(isSubmitted, touched, field, error) {
+  return isSubmitted || touched[field] ? error : "";
+}
 
 export default function Profile() {
-	const [activeTab, setActiveTab] = useState('settings');
-	const [fullName, setFullName] = useState('');
-	const [currentPassword, setCurrentPassword] = useState('');
-	const [newPassword, setNewPassword] = useState('');
-	const [confirmPassword, setConfirmPassword] = useState('');
+  const [profileData, setProfileData] = useState(initialProfileData);
+  const [profileErrors, setProfileErrors] = useState(initialProfileErrors);
+  const [profileTouched, setProfileTouched] = useState(initialProfileTouched);
+  const [profileSubmitted, setProfileSubmitted] = useState(false);
 
-	
-	const [errors, setErrors] = useState({
-		current: '',
-		new: '',
-		confirm: ''
-	});
+  const [passwordData, setPasswordData] = useState(initialPasswordData);
+  const [passwordErrors, setPasswordErrors] = useState(initialPasswordErrors);
+  const [passwordTouched, setPasswordTouched] = useState(initialPasswordTouched);
+  const [passwordSubmitted, setPasswordSubmitted] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-	const displayName = fullName.trim() || 'Username';
-	const avatarLetter = displayName.charAt(0).toUpperCase();
+  const displayName = profileData.fullName.trim() || "Account";
+  const avatarLetter = displayName.charAt(0).toUpperCase();
 
-	
+  const handleProfileChange = (event) => {
+    const { name, value } = event.target;
+    const nextProfileData = {
+      ...profileData,
+      [name]: value,
+    };
 
-	const handleUpdatePassword = () => {
-		let newErrors = {
-			current: '',
-			new: '',
-			confirm: ''
-		};
+    setProfileData(nextProfileData);
+    setProfileErrors(validateProfileForm(nextProfileData));
+  };
 
-		if (!currentPassword) {
-			newErrors.current = 'Please enter your current password';
-		}
+  const handleProfileBlur = (event) => {
+    const { name } = event.target;
 
-		if (!newPassword) {
-			newErrors.new = 'Password must be at least 8 characters.';
-		} else if (newPassword.length < 8) {
-			newErrors.new = 'Password must be at least 8 characters.';
-		}
+    setProfileTouched((current) => ({ ...current, [name]: true }));
+    setProfileErrors(validateProfileForm(profileData));
+  };
 
-		if (!confirmPassword) {
-			newErrors.confirm = 'Please confirm your password';
-		} else if (newPassword !== confirmPassword) {
-			newErrors.confirm = 'Passwords do not match.';
-		}
+  const handleProfileSubmit = (event) => {
+    event.preventDefault();
 
-		setErrors(newErrors);
+    const nextErrors = validateProfileForm(profileData);
+    setProfileSubmitted(true);
+    setProfileTouched({ fullName: true });
+    setProfileErrors(nextErrors);
 
-		if (newErrors.current || newErrors.new || newErrors.confirm) return;
+    if (Object.values(nextErrors).some(Boolean)) {
+      return;
+    }
+  };
 
-		
-		setCurrentPassword('');
-		setNewPassword('');
-		setConfirmPassword('');
-		setErrors({ current: '', new: '', confirm: '' });
-	};
+  const handlePasswordChange = (event) => {
+    const { name, value } = event.target;
+    const nextPasswordData = {
+      ...passwordData,
+      [name]: value,
+    };
 
-	return (
-		<div className="d-flex flex-column min-vh-100" style={{ backgroundColor: '#f0f0f0' }}>
-			<Navbar />
+    setPasswordData(nextPasswordData);
+    setPasswordErrors(validatePasswordForm(nextPasswordData));
+  };
 
-			<main className="flex-grow-1 py-5">
-				<div className="container" style={{ maxWidth: '900px' }}>
+  const handlePasswordBlur = (event) => {
+    const { name } = event.target;
 
-					<h2 className="fw-bold mb-4" style={{ fontSize: '1.6rem' }}>
-						My Profile
-					</h2>
+    setPasswordTouched((current) => ({ ...current, [name]: true }));
+    setPasswordErrors(validatePasswordForm(passwordData));
+  };
 
-					<div className="row g-4 align-items-stretch">
+  const handlePasswordSubmit = (event) => {
+    event.preventDefault();
 
-						{/* SIDEBAR */}
-						<div className="col-12 col-md-4">
-							<div className="card border-0 shadow-sm rounded-4 py-4 px-3 h-100">
+    const nextErrors = validatePasswordForm(passwordData);
+    setPasswordSubmitted(true);
+    setPasswordTouched({
+      currentPassword: true,
+      newPassword: true,
+      confirmPassword: true,
+    });
+    setPasswordErrors(nextErrors);
 
-								<div className="d-flex flex-column align-items-center mb-4">
-									<div
-										className="rounded-circle d-flex align-items-center justify-content-center mb-3"
-										style={{
-											width: '80px',
-											height: '80px',
-											backgroundColor: '#111',
-											color: '#fff',
-											fontSize: '2rem',
-											fontWeight: '600'
-										}}
-									>
-										{avatarLetter}
-									</div>
+    if (Object.values(nextErrors).some(Boolean)) {
+      return;
+    }
 
-									<h6 className="fw-bold mb-0">{displayName}</h6>
-									<small className="text-muted">you@example.com</small>
-								</div>
+    setPasswordData(initialPasswordData);
+    setPasswordErrors(initialPasswordErrors);
+    setPasswordTouched(initialPasswordTouched);
+    setPasswordSubmitted(false);
+    setShowNewPassword(false);
+    setShowConfirmPassword(false);
+  };
 
-								<nav className="d-flex flex-column gap-1">
+  return (
+    <div className={styles.page}>
+      <Navbar />
 
-									<button
-										onClick={() => setActiveTab('settings')}
-										className={`btn text-start d-flex align-items-center gap-2 px-3 py-2 rounded-3 border-0 ${
-											activeTab === 'settings'
-												? 'bg-light fw-semibold shadow-sm'
-												: 'bg-white text-muted'
-										}`}
-									>
-										<i className="fas fa-user"></i>
-										Profile Settings
-									</button>
+      <main className={styles.content}>
+        <div className={styles.container}>
+          <header className={styles.pageHeader}>
+            <div>
+              <p className={styles.eyebrow}>Account</p>
+              <h1 className={styles.pageTitle}>My Profile</h1>
+            </div>
+          </header>
 
-									<button
-										onClick={() => setActiveTab('orders')}
-										className={`btn text-start d-flex align-items-center gap-2 px-3 py-2 rounded-3 border-0 ${
-											activeTab === 'orders'
-												? 'bg-light fw-semibold shadow-sm'
-												: 'bg-white text-muted'
-										}`}
-									>
-										<i className="fas fa-shopping-bag"></i>
-										Order History
-									</button>
+          <div className={styles.layout}>
+            <aside className={styles.sidebarCard}>
+              <div className={styles.identity}>
+                <div className={styles.avatar} aria-hidden="true">
+                  {avatarLetter}
+                </div>
+                <h2 className={styles.identityName}>{displayName}</h2>
+              </div>
 
-									<a className="btn bg-white text-muted text-start d-flex align-items-center gap-2 px-3 py-2 rounded-3 border-0" href="/login">
-										<i className="fas fa-right-from-bracket"></i>
-										Logout
-									</a>
+              <nav className={styles.nav} aria-label="Profile sections">
+                <NavLink
+                  to="/profile"
+                  end
+                  className={({ isActive }) =>
+                    `${styles.navButton} ${isActive ? styles.navButtonActive : styles.navButtonInactive}`
+                  }
+                >
+                  <i className="fas fa-user"></i>
+                  Profile Settings
+                </NavLink>
 
-								</nav>
-							</div>
-						</div>
+                <NavLink
+                  to="/orders"
+                  end
+                  className={({ isActive }) =>
+                    `${styles.navButton} ${isActive ? styles.navButtonActive : styles.navButtonInactive}`
+                  }
+                >
+                  <i className="fas fa-shopping-bag"></i>
+                  Order History
+                </NavLink>
 
-						{/* CONTENT */}
-						<div className="col-12 col-md-8">
-							{activeTab === 'settings' ? (
-								<div className="d-flex flex-column gap-4">
+                <Link className={`${styles.navButton} ${styles.logoutLink}`} to="/login">
+                  <i className="fas fa-right-from-bracket"></i>
+                  Logout
+                </Link>
+              </nav>
+            </aside>
 
-									{/* EDIT PROFILE */}
-									<div className="card border-0 shadow-sm rounded-4 p-4 profile-form" style={{ backgroundColor: '#f8f9fa' }}>
-										<h5 className="fw-bold mb-4">Edit Profile</h5>
+            <section className={styles.mainPane}>
+              <div className={styles.panelStack}>
+                <section className={styles.sectionCard}>
+                  <div className={styles.sectionHeader}>
+                    <div>
+                      <p className={styles.sectionEyebrow}>Profile details</p>
+                      <h2 className={styles.sectionTitle}>Edit Profile</h2>
+                    </div>
+                  </div>
 
-										<div className="mb-3">
-											<label className="form-label text-muted">Full Name</label>
+                  <form className={styles.form} onSubmit={handleProfileSubmit} noValidate>
+                    <div className={styles.formGrid}>
+                      <AuthField
+                        id="profile-full-name"
+                        label="Full Name"
+                        name="fullName"
+                        type="text"
+                        value={profileData.fullName}
+                        onChange={handleProfileChange}
+                        onBlur={handleProfileBlur}
+                        placeholder="Enter your full name"
+                        iconClass="fa-regular fa-user"
+                        error={getVisibleError(profileSubmitted, profileTouched, "fullName", profileErrors.fullName)}
+                        autoComplete="name"
+                      />
+                    </div>
 
-											<div className="input-group">
-												<span className="input-group-text bg-white border-end-0">
-											<i className="fas fa-user text-muted"></i>
-												</span>
-												<input
-													type="text"
-													className="form-control border-start-0"
-													placeholder="Username"
-													value={fullName}
-													onChange={(e) => setFullName(e.target.value)}
-												/>
-											</div>
-										</div>
+                    <div className={styles.actionsRow}>
+                      <button type="submit" className={styles.primaryButton}>
+                        <i className="fas fa-floppy-disk"></i>
+                        Save Changes
+                      </button>
+                    </div>
+                  </form>
+                </section>
 
-										<button
-											
-											className="btn text-white d-flex align-items-center gap-2 px-3 py-2"
-											style={{
-												backgroundColor: '#111',
-												borderRadius: '6px',
-												fontSize: '0.85rem',
-												width: 'fit-content'
-											}}
-										>
-											<i className="fas fa-floppy-disk"></i>
-											Save Changes
-										</button>
-									</div>
+                <section className={styles.sectionCard}>
+                  <div className={styles.sectionHeader}>
+                    <div>
+                      <p className={styles.sectionEyebrow}>Security</p>
+                      <h2 className={styles.sectionTitle}>Change Password</h2>
+                    </div>
+                  </div>
 
-									{/* CHANGE PASSWORD */}
-									<div className="card border-0 shadow-sm rounded-4 p-4 profile-form" style={{ backgroundColor: '#f8f9fa' }}>
-										<h5 className="fw-bold mb-4">Change Password</h5>
+                  <form className={styles.form} onSubmit={handlePasswordSubmit} noValidate>
+                    <div className={styles.formGrid}>
+                      <AuthField
+                        id="profile-current-password"
+                        label="Current Password"
+                        name="currentPassword"
+                        type="password"
+                        value={passwordData.currentPassword}
+                        onChange={handlePasswordChange}
+                        onBlur={handlePasswordBlur}
+                        placeholder="Enter current password"
+                        iconClass="fa-solid fa-lock"
+                        error={getVisibleError(passwordSubmitted, passwordTouched, "currentPassword", passwordErrors.currentPassword)}
+                        autoComplete="current-password"
+                      />
 
-										{/* Current Password */}
-										<div className="mb-5">
-											<label className="form-label text-muted">Current Password</label>
-											<div className="input-group">
-												<span className="input-group-text bg-white border-end-0">
-													<i className="fas fa-lock text-muted"></i>
-												</span>
-												<input
-													type="password"
-													className="form-control border-start-0"
-													placeholder="••••••••"
-													value={currentPassword}
-													onChange={(e) => setCurrentPassword(e.target.value)}
-												/>
-											</div>
-											{errors.current && (
-												<small className="text-danger">{errors.current}</small>
-											)}
-										</div>
+                      <AuthField
+                        id="profile-new-password"
+                        label="New Password"
+                        name="newPassword"
+                        type={showNewPassword ? "text" : "password"}
+                        value={passwordData.newPassword}
+                        onChange={handlePasswordChange}
+                        onBlur={handlePasswordBlur}
+                        placeholder="Create a new password"
+                        iconClass="fa-solid fa-lock"
+                        error={getVisibleError(passwordSubmitted, passwordTouched, "newPassword", passwordErrors.newPassword)}
+                        autoComplete="new-password"
+                        showToggle
+                        isPasswordVisible={showNewPassword}
+                        onTogglePasswordVisibility={() => setShowNewPassword((current) => !current)}
+                      />
 
-										{/* New Password */}
-										<div className="mb-5">
-											<label className="form-label text-muted">Password</label>
-											<div className="input-group">
-												<span className="input-group-text bg-white border-end-0">
-													<i className="fas fa-lock text-muted"></i>
-												</span>
-												<input
-													type="password"
-													className="form-control border-start-0"
-													placeholder="••••••••"
-													value={newPassword}
-													onChange={(e) => setNewPassword(e.target.value)}
-												/>
-											</div>
-											{errors.new && (
-												<small className="text-danger">{errors.new}</small>
-											)}
-										</div>
+                      <AuthField
+                        id="profile-confirm-password"
+                        label="Confirm Password"
+                        name="confirmPassword"
+                        type={showConfirmPassword ? "text" : "password"}
+                        value={passwordData.confirmPassword}
+                        onChange={handlePasswordChange}
+                        onBlur={handlePasswordBlur}
+                        placeholder="Confirm the new password"
+                        iconClass="fa-solid fa-lock"
+                        error={getVisibleError(passwordSubmitted, passwordTouched, "confirmPassword", passwordErrors.confirmPassword)}
+                        autoComplete="new-password"
+                        showToggle
+                        isPasswordVisible={showConfirmPassword}
+                        onTogglePasswordVisibility={() => setShowConfirmPassword((current) => !current)}
+                      />
+                    </div>
 
-										{/* Confirm Password */}
-										<div className="mb-5">
-											<label className="form-label text-muted">Confirm Password</label>
-											<div className="input-group">
-												<span className="input-group-text bg-white border-end-0">
-													<i className="fas fa-lock text-muted"></i>
-												</span>
-												<input
-													type="password"
-													className="form-control border-start-0"
-													placeholder="••••••••"
-													value={confirmPassword}
-													onChange={(e) => setConfirmPassword(e.target.value)}
-												/>
-											</div>
-											{errors.confirm && (
-												<small className="text-danger">{errors.confirm}</small>
-											)}
-										</div>
+                    <div className={styles.actionsRow}>
+                      <button type="submit" className={styles.primaryButton}>
+                        <i className="fas fa-lock"></i>
+                        Update Password
+                      </button>
+                    </div>
+                  </form>
+                </section>
+              </div>
+            </section>
+          </div>
+        </div>
+      </main>
 
-										<button
-											onClick={handleUpdatePassword}
-											className="btn text-white d-flex align-items-center gap-2 px-3 py-2"
-											style={{
-												backgroundColor: '#111',
-												borderRadius: '6px',
-												fontSize: '0.85rem',
-												width: 'fit-content'
-											}}
-										>
-											<i className="fas fa-lock"></i>
-											Update Password
-										</button>
-									</div>
-
-								</div>
-							) : (
-								<OrdersContent />
-							)}
-						</div>
-
-					</div>
-				</div>
-			</main>
-
-			<Footer />
-		</div>
-	);
+      <Footer />
+    </div>
+  );
 }

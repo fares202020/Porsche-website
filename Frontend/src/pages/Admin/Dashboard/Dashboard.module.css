@@ -1,0 +1,419 @@
+.page {
+  background: #f4f4f2;
+  color: #111111;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+.content {
+  min-height: calc(100vh - 250px);
+  padding: 40px 0 56px;
+}
+
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  display: grid;
+  gap: 24px;
+}
+
+.pageHeader {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.pageHeader > div:first-child {
+  min-width: 0;
+}
+
+.eyebrow,
+.panelEyebrow {
+  margin: 0 0 8px;
+  color: #8a6f16;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.pageTitle {
+  margin: 0;
+  color: #111111;
+  font-size: clamp(1.9rem, 2.5vw, 2.45rem);
+  line-height: 1.1;
+  font-weight: 800;
+}
+
+.pageSubtitle {
+  margin: 10px 0 0;
+  color: #666666;
+  font-size: 0.98rem;
+  line-height: 1.7;
+  max-width: 68ch;
+  overflow-wrap: anywhere;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.statCard,
+.quickCard,
+.tablePanel {
+  border: 1px solid #e4e4e4;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.05);
+}
+
+.statCard {
+  padding: 22px;
+  display: grid;
+  gap: 10px;
+}
+
+.statTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.statIcon {
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #111111;
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+.statLabel {
+  color: #666666;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.statValue {
+  color: #111111;
+  font-size: 1.65rem;
+  line-height: 1;
+}
+
+.tablePanel {
+  padding: 24px;
+}
+
+.panelHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.panelTitle {
+  margin: 0;
+  color: #111111;
+  font-size: 1.12rem;
+  line-height: 1.25;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.quickGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.quickCard {
+  min-height: 112px;
+  padding: 22px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px;
+  color: #111111;
+  text-decoration: none;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.quickCard:hover {
+  color: #111111;
+  border-color: #cfcfcf;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.08);
+}
+
+.quickIcon {
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f1e6;
+  color: #8a6f16;
+}
+
+.quickCard strong,
+.quickCard small {
+  display: block;
+}
+
+.quickCard strong {
+  margin-bottom: 6px;
+  color: #111111;
+  font-size: 1rem;
+}
+
+.quickCard small {
+  color: #666666;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.quickArrow {
+  color: #9a9a9a;
+}
+
+.textLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #111111;
+  font-size: 0.9rem;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.textLink:hover {
+  color: #8a6f16;
+}
+
+.tableWrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ordersTable {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 760px;
+}
+
+.ordersTable th,
+.ordersTable td {
+  padding: 15px 0;
+  border-bottom: 1px solid #ededed;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.ordersTable th {
+  color: #777777;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.ordersTable td {
+  color: #111111;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.secondaryText {
+  margin-top: 4px;
+  color: #6f6f6f;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.ordersTable tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.statusBadge {
+  min-height: 28px;
+  padding: 0 11px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.completed {
+  background: #ecf8ef;
+  color: #1d7a3b;
+  border-color: #cce8d5;
+}
+
+.processing {
+  background: #fff6db;
+  color: #8d6500;
+  border-color: #f4e1a5;
+}
+
+.cancelled {
+  background: #fdeff0;
+  color: #a84646;
+  border-color: #f5cfd1;
+}
+
+@media (max-width: 991.98px) {
+  .statsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .quickGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .content {
+    padding: 32px 0 48px;
+  }
+
+  .container {
+    width: min(100% - 36px, 1180px);
+    gap: 18px;
+  }
+
+  .pageHeader {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .pageTitle {
+    font-size: 1.95rem;
+  }
+
+  .pageSubtitle {
+    font-size: 0.94rem;
+    line-height: 1.6;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .statCard {
+    min-width: 0;
+  }
+
+  .tablePanel {
+    overflow: hidden;
+  }
+
+  .ordersTable {
+    min-width: 680px;
+  }
+
+  .ordersTable th,
+  .ordersTable td {
+    padding: 14px 12px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .content {
+    padding: 28px 0 44px;
+  }
+
+  .container {
+    width: min(100% - 32px, 1180px);
+    gap: 16px;
+  }
+
+  .eyebrow,
+  .panelEyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+  }
+
+  .pageTitle {
+    font-size: 1.72rem;
+  }
+
+  .statValue {
+    font-size: 1.45rem;
+  }
+
+  .statCard,
+  .tablePanel,
+  .quickCard {
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .panelHeader {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .quickCard {
+    min-height: 96px;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  .quickArrow {
+    display: none;
+  }
+
+  .tableWrap {
+    margin-inline: -20px;
+    padding-inline: 20px;
+  }
+
+  .ordersTable {
+    min-width: 640px;
+  }
+
+  .ordersTable th,
+  .ordersTable td {
+    padding: 13px 10px;
+  }
+
+  .statusBadge {
+    min-width: 86px;
+  }
+}
+
+@media (max-width: 380px) {
+  .container {
+    width: min(100% - 24px, 1180px);
+  }
+
+  .statCard,
+  .tablePanel,
+  .quickCard {
+    padding: 16px;
+  }
+
+  .tableWrap {
+    margin-inline: -16px;
+    padding-inline: 16px;
+  }
+}

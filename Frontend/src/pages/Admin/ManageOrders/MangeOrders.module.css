@@ -1,0 +1,282 @@
+.page {
+  min-height: 100vh;
+  padding: 28px 0 56px;
+  background: #f4f4f2;
+  color: #111111;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  display: grid;
+  gap: 24px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #8a6f16;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.backLink:hover {
+  color: #111111;
+}
+
+.header h1 {
+  margin: 0;
+  color: #111111;
+  font-size: clamp(1.75rem, 2.4vw, 2.25rem);
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.searchBox,
+.filterBox {
+  min-height: 50px;
+  padding: 0 14px;
+  border: 1px solid #cfd4dc;
+  border-radius: 8px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #8a94a6;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.searchBox {
+  width: min(430px, 100%);
+}
+
+.filterBox {
+  width: min(150px, 100%);
+}
+
+.searchBox:focus-within,
+.filterBox:focus-within {
+  border-color: #111111;
+  box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.08);
+}
+
+.searchBox input,
+.filterBox select {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #111111;
+  font-size: 0.92rem;
+}
+
+.filterBox select,
+.statusSelect {
+  cursor: pointer;
+}
+
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.summaryCard,
+.tablePanel {
+  border: 1px solid #e4e4e4;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.05);
+}
+
+.summaryCard {
+  padding: 20px;
+  display: grid;
+  gap: 8px;
+}
+
+.summaryCard span {
+  color: #555555;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.summaryCard strong {
+  color: #111111;
+  font-size: 1.45rem;
+  line-height: 1;
+}
+
+.warningText {
+  color: #e58a00 !important;
+}
+
+.successText {
+  color: #00a64a !important;
+}
+
+.revenueText {
+  color: #8a6f16 !important;
+}
+
+.tablePanel {
+  overflow: hidden;
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.dataTable {
+  width: 100%;
+  min-width: 980px;
+  border-collapse: collapse;
+}
+
+.dataTable th,
+.dataTable td {
+  padding: 16px 22px;
+  border-bottom: 1px solid #e4e4e4;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.dataTable th {
+  color: #333333;
+  background: #fbfbfb;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dataTable td {
+  color: #111111;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.dataTable tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.primaryText {
+  color: #111111;
+  font-weight: 800;
+}
+
+.secondaryText {
+  margin-top: 4px;
+  color: #6f6f6f;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.statusBadge {
+  min-height: 28px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.completed {
+  background: #ecf8ef;
+  color: #1d7a3b;
+  border-color: #cce8d5;
+}
+
+.processing {
+  background: #fff6db;
+  color: #8d6500;
+  border-color: #f4e1a5;
+}
+
+.cancelled {
+  background: #fdeff0;
+  color: #a84646;
+  border-color: #f5cfd1;
+}
+
+.statusSelect {
+  min-width: 120px;
+  min-height: 34px;
+  padding: 0 10px;
+  border: 1px solid #cfd4dc;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #111111;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.statusSelect:focus {
+  border-color: #111111;
+  outline: 0;
+  box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.08);
+}
+
+.emptyState {
+  padding: 24px;
+  color: #666666;
+  font-weight: 700;
+  text-align: center;
+}
+
+@media (max-width: 991.98px) {
+  .summaryGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767.98px) {
+  .container {
+    width: min(100% - 32px, 1180px);
+  }
+
+  .header,
+  .titleRow,
+  .controls {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .searchBox,
+  .filterBox {
+    width: 100%;
+  }
+
+  .summaryGrid {
+    grid-template-columns: 1fr;
+  }
+}

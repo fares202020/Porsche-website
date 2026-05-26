@@ -1,9 +1,234 @@
-.iconHover {
-    border-radius: 5px;
+.footer {
+  background: #111111;
+  color: #ffffff;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.iconHover:hover {
-    color: #5D5D5D;
-    border-radius: 5px;
-    transition: ease-in-out 0.3s;
+.footerInner {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 56px 0 44px;
+  display: grid;
+  grid-template-columns: minmax(260px, 1.35fr) minmax(360px, 1.6fr) minmax(220px, 0.85fr);
+  gap: 48px;
+  align-items: start;
+}
+
+.brandColumn,
+.connectColumn,
+.linkGroup {
+  min-width: 0;
+}
+
+.brand {
+  display: inline-block;
+  color: #ffffff;
+  font-family: "Inter", sans-serif;
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  line-height: 1;
+  text-decoration: none;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  transition: opacity 0.2s ease;
+}
+
+.brand:hover {
+  opacity: 0.72;
+}
+
+.description,
+.connectColumn p {
+  color: #b9b9b9;
+  font-size: 0.95rem;
+  line-height: 1.75;
+  margin: 0;
+}
+
+.description {
+  max-width: 390px;
+}
+
+.contactBlock {
+  display: grid;
+  gap: 10px;
+  margin-top: 26px;
+}
+
+.contactItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  color: #d8d8d8;
+  font-size: 0.93rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.contactItem i {
+  width: 16px;
+  color: #ffffff;
+  font-size: 0.9rem;
+}
+
+a.contactItem:hover {
+  color: #ffffff;
+}
+
+.linksGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 34px;
+}
+
+.linkGroup {
+  display: grid;
+  gap: 10px;
+}
+
+.linkGroup h2,
+.connectColumn h2 {
+  color: #ffffff;
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  margin: 0 0 8px;
+  text-transform: uppercase;
+}
+
+.linkGroup a,
+.legalLinks a {
+  color: #b9b9b9;
+  text-decoration: none;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.linkGroup a {
+  width: fit-content;
+  font-size: 0.95rem;
+}
+
+.linkGroup a:hover,
+.legalLinks a:hover {
+  color: #ffffff;
+}
+
+.connectColumn {
+  display: grid;
+  gap: 14px;
+}
+
+.socialLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.socialLinks a {
+  width: 42px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.socialLinks a:hover {
+  background-color: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.24);
+  transform: translateY(-2px);
+}
+
+.socialLinks i {
+  font-size: 1rem;
+}
+
+.footerBottom {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 20px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footerBottom p {
+  color: #9d9d9d;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.legalLinks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 18px;
+}
+
+.legalLinks a {
+  font-size: 0.9rem;
+}
+
+@media (max-width: 991.98px) {
+  .footerInner {
+    grid-template-columns: 1fr;
+    gap: 38px;
+    padding-top: 48px;
+  }
+
+  .description {
+    max-width: 620px;
+  }
+
+  .linksGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 575.98px) {
+  .footerInner,
+  .footerBottom {
+    width: min(100% - 32px, 1180px);
+  }
+
+  .footerInner {
+    padding: 42px 0 32px;
+    gap: 32px;
+  }
+
+  .linksGrid {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  .linkGroup {
+    gap: 9px;
+  }
+
+  .socialLinks a {
+    width: 40px;
+    height: 40px;
+  }
+
+  .footerBottom {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 18px 0 24px;
+  }
+
+  .legalLinks {
+    justify-content: flex-start;
+    gap: 14px;
+  }
 }

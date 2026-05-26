@@ -1,0 +1,280 @@
+.page {
+  min-height: 100vh;
+  padding: 28px 0 56px;
+  background: #f4f4f2;
+  color: #111111;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  display: grid;
+  gap: 24px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #8a6f16;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.backLink:hover {
+  color: #111111;
+}
+
+.header h1 {
+  margin: 0;
+  color: #111111;
+  font-size: clamp(1.75rem, 2.4vw, 2.25rem);
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.searchBox {
+  width: min(430px, 100%);
+  min-height: 50px;
+  padding: 0 14px;
+  border: 1px solid #cfd4dc;
+  border-radius: 8px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #8a94a6;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.searchBox:focus-within {
+  border-color: #111111;
+  box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.08);
+}
+
+.searchBox input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #111111;
+  font-size: 0.92rem;
+}
+
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.summaryCard,
+.tablePanel {
+  border: 1px solid #e4e4e4;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.05);
+}
+
+.summaryCard {
+  padding: 20px;
+  display: grid;
+  gap: 8px;
+}
+
+.summaryCard span {
+  color: #555555;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.summaryCard strong {
+  color: #111111;
+  font-size: 1.45rem;
+  line-height: 1;
+}
+
+.successText {
+  color: #00a64a !important;
+}
+
+.dangerText {
+  color: #b4232f !important;
+}
+
+.tablePanel {
+  overflow: hidden;
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.dataTable {
+  width: 100%;
+  min-width: 920px;
+  border-collapse: collapse;
+}
+
+.dataTable th,
+.dataTable td {
+  padding: 16px 22px;
+  border-bottom: 1px solid #e4e4e4;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.dataTable th {
+  color: #333333;
+  background: #fbfbfb;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dataTable td {
+  color: #111111;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.dataTable tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.userCell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #111111, #8a6f16);
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.roleBadge,
+.statusBadge {
+  min-height: 26px;
+  padding: 0 11px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.76rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.roleBadge {
+  background: #f5f1e6;
+  color: #7d6412;
+  border-color: #eadfbf;
+}
+
+.active {
+  background: #e8f9ee;
+  color: #14833e;
+  border-color: #c8edd4;
+}
+
+.inactive {
+  background: #fdeff0;
+  color: #b4232f;
+  border-color: #f7cfd3;
+}
+
+.actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.warnButton,
+.deleteButton {
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.warnButton {
+  color: #e58a00;
+}
+
+.deleteButton {
+  color: #b4232f;
+}
+
+.warnButton:hover,
+.deleteButton:hover {
+  transform: translateY(-1px);
+}
+
+.warnButton:hover {
+  background: #fff6e8;
+}
+
+.deleteButton:hover {
+  background: #fff0f2;
+}
+
+.emptyState {
+  padding: 24px;
+  color: #666666;
+  font-weight: 700;
+  text-align: center;
+}
+
+@media (max-width: 991.98px) {
+  .summaryGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767.98px) {
+  .container {
+    width: min(100% - 32px, 1180px);
+  }
+
+  .header,
+  .titleRow {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .summaryGrid {
+    grid-template-columns: 1fr;
+  }
+}

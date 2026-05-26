@@ -1,3 +1,134 @@
+.pageShell {
+    width: min(100% - 48px, 1440px);
+    margin: 48px auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.75fr) minmax(380px, 0.9fr);
+    gap: 32px;
+    align-items: start;
+}
+
+.previewPanel,
+.sceneCarousel,
+.detailsColumn {
+    min-width: 0;
+}
+
+.previewPanel {
+    grid-column: 1;
+    grid-row: 1;
+    position: sticky;
+    top: 16px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-self: start;
+}
+
+.detailsColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    grid-column: 2;
+    grid-row: 1;
+    align-self: start;
+}
+
+.detailsCard {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+}
+
+.previewSticky {
+    min-width: 0;
+}
+
+.modelContainer {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    border-radius: 16px;
+    background-color: #e7e7e7;
+}
+
+.modelCanvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 16px;
+}
+
+.sceneCarousel {
+    position: relative;
+    display: block;
+}
+
+.sceneTrack {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    padding: 4px 52px 8px;
+    scrollbar-width: none;
+}
+
+.sceneTrack::-webkit-scrollbar {
+    display: none;
+}
+
+.sceneButton {
+    flex: 0 0 112px;
+    height: 68px;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    background: none;
+    cursor: pointer;
+    scroll-snap-align: center;
+}
+
+.sceneButton:focus-visible,
+.sceneNav:focus-visible {
+    outline: 3px solid #111111;
+    outline-offset: 3px;
+}
+
+.sceneImage {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.sceneNav {
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border: 0;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    color: #111111;
+    cursor: pointer;
+    transform: translateY(-50%);
+}
+
+.sceneNavLeft {
+    left: 4px;
+}
+
+.sceneNavRight {
+    right: 4px;
+}
+
 .place-order {
     background-color: black;
     color: white;
@@ -13,10 +144,91 @@
     background-color: #333;
 }
 
-.model-container {
-    height: 70vh;
+@media (min-width: 992px) {
+    .modelContainer {
+        height: min(calc((100vw - 80px) * 0.41), 500px);
+        aspect-ratio: auto;
+    }
+
+    .detailsCard {
+        padding: 28px;
+    }
+
+    .sceneTrack {
+        display: grid;
+        grid-template-columns: repeat(8, minmax(0, 1fr));
+        padding-inline: 0;
+        overflow-x: visible;
+        scroll-snap-type: none;
+    }
+
+    .sceneNav {
+        display: none;
+    }
+
+    .sceneButton {
+        width: 100%;
+        height: 58px;
+    }
 }
 
-img {
-    height: 50px;
+@media (max-width: 991.98px) {
+    .pageShell {
+        grid-template-columns: 1fr;
+        width: min(100% - 24px, 760px);
+        margin-top: 24px;
+    }
+
+    .previewPanel {
+        grid-column: 1;
+        grid-row: auto;
+        top: 0;
+    }
+
+    .detailsColumn {
+        grid-column: 1;
+        grid-row: auto;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .pageShell {
+        width: 100%;
+        margin: 0 auto 32px;
+        gap: 18px;
+    }
+
+    .previewPanel {
+        width: 100%;
+        background-color: #f5f5f5;
+        z-index: 20;
+        gap: 12px;
+    }
+
+    .modelContainer {
+        width: 100%;
+        height: calc(100vw * 2 / 3);
+        aspect-ratio: auto;
+        border-radius: 0;
+    }
+
+    .modelCanvas {
+        width: 100% !important;
+        height: 100% !important;
+        border-radius: 0;
+    }
+
+    .sceneCarousel {
+        margin: 0 12px;
+    }
+
+    .detailsColumn {
+        padding: 0 12px;
+        gap: 16px;
+    }
+
+    .detailsCard {
+        border-radius: 12px;
+        padding: 20px;
+    }
 }

@@ -1,8 +1,155 @@
 /* Base custom styles to unify transitions and paddings */
 .navbarCustom {
+  position: relative;
+  display: flex !important;
+  align-items: center !important;
   transition: all 0.3s ease-in-out;
-  padding-top: 15px !important;
-  padding-bottom: 15px !important;
+  min-height: 68px;
+  padding: 12px clamp(10px, 2vw, 24px) 12px clamp(20px, 4vw, 48px) !important;
+}
+
+.brand {
+  margin: 0 !important;
+  flex: 0 0 auto;
+  line-height: 1;
+}
+
+.navbarMenu {
+  flex: 1 1 auto;
+  align-items: center !important;
+  min-height: 44px;
+}
+
+.primaryLinks {
+  display: flex;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  flex: 0 1 auto;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(28px, 4vw, 44px);
+}
+
+.navLink {
+  margin: 0 !important;
+  padding: 6px 0 !important;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.accountArea {
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: flex-end;
+  align-items: center;
+  min-height: 44px;
+  margin-left: auto;
+}
+
+.accountDropdown {
+  display: flex;
+  align-items: center;
+  margin-right: 0;
+}
+
+.accountToggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0 !important;
+  border-radius: 999px;
+  line-height: 1;
+  transform: translateY(3px);
+  transition: background-color 0.2s ease;
+}
+
+.accountToggle i {
+  display: block;
+  line-height: 1;
+}
+
+.dropdownMenu {
+  min-width: 176px;
+  margin-top: 8px !important;
+  padding: 8px !important;
+  border-radius: 4px !important;
+  border-color: #e5e5e5 !important;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+}
+
+.dropdownItem {
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+  border-radius: 4px;
+  padding: 10px 12px !important;
+  font-size: 0.92rem;
+  line-height: 1.2;
+}
+
+.dropdownItem i {
+  width: 18px;
+  text-align: center;
+  color: #686868;
+}
+
+.mobileAccountLinks {
+  display: none;
+}
+
+.menuToggle {
+  width: 44px;
+  height: 44px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  border: 0 !important;
+  border-radius: 4px;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+
+.menuToggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  border-radius: 999px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.menuToggle[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.menuToggle[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+
+.menuToggle[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.defaultToggle {
+  background-color: #f4f4f4 !important;
+}
+
+.defaultToggle span {
+  background-color: #1a1a1a;
+}
+
+.transparentToggle {
+  background-color: rgba(255, 255, 255, 0.12) !important;
+  backdrop-filter: blur(12px);
+}
+
+.transparentToggle span {
+  background-color: #ffffff;
 }
 
 /* Default / Solid White Navbar (for other pages) */
@@ -37,6 +184,10 @@
 .defaultIcon {
   color: #1a1a1a !important;
   transition: opacity 0.2s ease;
+}
+
+.defaultNavbar .accountToggle:hover {
+  background-color: #f3f3f3;
 }
 
 .defaultIcon:hover {
@@ -82,6 +233,96 @@
   transition: opacity 0.2s ease;
 }
 
+.transparentNavbar .accountToggle:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
 .transparentIcon:hover {
   opacity: 0.7;
+}
+
+@media (max-width: 767.98px) {
+  .navbarCustom {
+    align-items: flex-start !important;
+    min-height: 64px;
+    padding: 10px 18px !important;
+  }
+
+  .brand {
+    flex: 0 1 auto;
+    line-height: 44px;
+  }
+
+  .menuToggle {
+    display: inline-flex;
+    margin-left: auto;
+  }
+
+  .navbarMenu {
+    flex-basis: 100%;
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .defaultMenu {
+    background-color: #ffffff;
+    border: 1px solid #e5e5e5;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
+  }
+
+  .transparentMenu {
+    background-color: rgba(8, 8, 8, 0.86);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
+  }
+
+  .primaryLinks,
+  .accountArea,
+  .mobileAccountLinks {
+    display: flex;
+    position: static;
+    transform: none;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .primaryLinks {
+    gap: 0;
+    padding: 8px 14px 2px;
+  }
+
+  .accountArea {
+    margin-left: 0;
+    padding: 0 14px 10px;
+  }
+
+  .navLink {
+    width: 100%;
+    padding: 12px 2px !important;
+    border-bottom: 1px solid rgba(127, 127, 127, 0.18);
+    font-size: 0.98rem !important;
+  }
+
+  .accountDropdown {
+    display: none;
+  }
+
+  .mobileAccountLinks .navLink:last-child {
+    border-bottom: 0;
+  }
+
+  .mobileAccountLink {
+    display: flex !important;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .mobileAccountLink i {
+    width: 18px;
+    text-align: center;
+  }
 }
