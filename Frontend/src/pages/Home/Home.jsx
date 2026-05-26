@@ -1,6 +1,11 @@
-import { useState } from "react";
+// Home.jsx
+
+import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./Home.module.css";
+
 import pv from "../../assets/icons/Porsche 911 GT3 RS.mp4";
+
 import img911 from "../../assets/icons/911@2x.png";
 import cayenee from "../../assets/icons/filters_format(avif) (4).png";
 import cayman from "../../assets/icons/718 caymans.png";
@@ -21,52 +26,121 @@ const models = [
   {
     name: "911",
     img: img911,
-    exploreLink: "/models/911",
-    discoverLink: "/discover/911",
+    title: "Porsche 911",
+    desc: "Timeless sports car with iconic design and performance.",
+    explorePath: "/models/911",
+    discoverPath: "/discover/911",
   },
   {
     name: "718",
     img: cayman,
-    exploreLink: "/models/718",
-    discoverLink: "/discover/718",
+    title: "Porsche 718",
+    desc: "Pure driving experience with mid-engine precision.",
+    explorePath: "/models/718",
+    discoverPath: "/discover/718",
   },
   {
     name: "Cayenne",
     img: cayenee,
-    exploreLink: "/models/cayenne",
-    discoverLink: "/discover/cayenne",
+    title: "Porsche Cayenne",
+    desc: "Luxury SUV with sports DNA.",
+    explorePath: "/models/cayenne",
+    discoverPath: "/discover/cayenne",
   },
 ];
+
+function useInView(options = {}) {
+  const ref = useRef(null);
+  const [inView, setInView] = useState(false);
+
+  
+  const optionsRef = useRef(options);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight) {
+      setInView(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      {
+        threshold: 0.1,
+        ...optionsRef.current,
+      }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []); 
+
+  return [ref, inView];
+}
+
 export default function Home() {
-  const [activeModel, setActiveModel] = useState(0);
+  const navigate = useNavigate();
 
-  const prev = () =>
-    setActiveModel((i) => (i - 1 + models.length) % models.length);
+  const [active, setActive] = useState(0);
+  const [animating, setAnimating] = useState(false);
+  const [infoKey, setInfoKey] = useState(0);
 
-  const next = () =>
-    setActiveModel((i) => (i + 1) % models.length);
+  const [catRef, catInView] = useInView();
+  const [modRef, modInView] = useInView();
+
+  const total = models.length;
+
+  const goTo = (index) => {
+    if (animating || index === active) return;
+    setAnimating(true);
+    setTimeout(() => {
+      setActive(index);
+      setInfoKey((k) => k + 1);
+      setAnimating(false);
+    }, 650);
+  };
+
+  const next = () => goTo((active + 1) % total);
+  const prev = () => goTo((active - 1 + total) % total);
+
+  const getPosition = (index) => {
+    if (index === active) return "carCenter";
+    if (index === (active - 1 + total) % total) return "carLeft";
+    if (index === (active + 1) % total) return "carRight";
+    return "carHidden";
+  };
 
   return (
     <div className={styles.home}>
-
       {/* HERO */}
       <section className={styles.hero}>
-       <video
-    className={styles.heroVideo}
-    autoPlay
-    muted
-    loop
-    playsInline
-  >
-    <source src={pv} type="video/mp4" />
-  </video>
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className={styles.heroVideo}
+        >
+          <source src={pv} type="video/mp4" />
+        </video>
+
+        {/* FIX: fallback background so hero is never blank if video fails */}
+        <div className={styles.heroOverlay} />
 
         <div className={styles.heroContent}>
           <h1 className={styles.heroTitle}>
             {"Pure Driving Emotion".split(" ").map((word, i) => (
               <span
                 key={i}
-                className={styles.word}
                 style={{ animationDelay: `${i * 0.3}s` }}
               >
                 {word}
@@ -78,91 +152,118 @@ export default function Home() {
             Built for performance. Driven by passion.
           </p>
 
-          <button className={styles.btnDark}>Shop Now</button>
+          <button className={styles.btnDark}>SHOP NOW</button>
         </div>
       </section>
 
       {/* CATEGORIES */}
-      <section className={styles.categories}>
-        <h2>Shop by Category</h2>
+      <section
+        ref={catRef}
+        className={`${styles.categories} ${catInView ? styles.sectionVisible : ""}`}
+      >
+        <h2 className={styles.sectionHeading}>Shop by Category</h2>
 
         <div className={styles.categoryGrid}>
-          {categories.map((cat) => (
-            <div key={cat.label} className={styles.categoryCard}>
+          {categories.map((cat, i) => (
+            <div
+              key={cat.label}
+              className={`${styles.categoryCard} ${catInView ? styles.cardVisible : ""}`}
+              style={{ "--card-delay": `${0.2 + i * 0.15}s` }}
+            >
               <img src={cat.img} alt={cat.label} />
-              <div className={styles.overlay}></div>
-
-              <div className={styles.categoryInfo}>
-                <span>{cat.label}</span>
-                <span>→</span>
-              </div>
+              <div className={styles.overlay} />
+              <span>{cat.label}</span>
             </div>
           ))}
         </div>
       </section>
 
       {/* MODELS */}
-     
-      <section className={styles.models}>
-        <span className={styles.sideLabel}>MODELS</span>
-        <div className={styles.carousel}>
-          
-          {/* LEFT GHOST */}
-          <div className={styles.sideCarLeft}>
-            <img src={models[(activeModel - 1 + models.length) % models.length].img} />
-          </div>
+      <section
+        ref={modRef}
+        className={`${styles.models} ${modInView ? styles.sectionVisible : ""}`}
+      >
+        <p
+          className={`${styles.modelsEyebrow} ${modInView ? styles.eyebrowVisible : ""}`}
+        >
+          OUR LINEUP
+        </p>
 
-          {/* CENTER */}
-          
-          <div className={styles.modelContent}>
-         
-            <h1 className={styles.bigTitle}>DARE TO LIVE MORE</h1>
+        <h2
+          className={`${styles.modelsTitle} ${modInView ? styles.titleVisible : ""}`}
+        >
+          MODELS
+        </h2>
 
-            <img
-              src={models[activeModel].img}
-              className={styles.modelImg}
-            />
+        {/* CAROUSEL */}
+        <div className={styles.carouselStage}>
+          <button
+            className={`${styles.arrowBtn} ${styles.arrowBtnLeft}`}
+            onClick={prev}
+          >
+            ‹
+          </button>
 
-            <div className={styles.modelTabs}>
-              {models.map((model, index) => (
-                <button
-                  key={index}
-                  onClick={() => setActiveModel(index)}
-                  className={`${styles.modelTab} ${
-                    index === activeModel ? styles.active : ""
+          <div className={styles.carsTrack}>
+            {models.map((m, i) => {
+              const pos = getPosition(i);
+              return (
+                <div
+                  key={i}
+                  onClick={() => pos !== "carCenter" && goTo(i)}
+                  className={`${styles.carSlide} ${styles[pos]} ${
+                    modInView ? styles.carVisible : ""
                   }`}
+                  style={{ "--car-delay": `${0.5 + i * 0.2}s` }}
                 >
-                  {model.name}
-                </button>
-              ))}
-              </div>
-              </div>
-              <div className={styles.buttons}>
- 
-</div>
-          
-
-          {/* RIGHT GHOST */}
-          <div className={styles.sideCarRight}>
-            <img src={models[(activeModel + 1) % models.length].img} />
+                  <img
+                    src={m.img}
+                    alt={m.name}
+                    className={styles.carImg}
+                  />
+                </div>
+              );
+            })}
           </div>
 
-          {/* ARROWS */}
-          <button onClick={prev} className={`${styles.arrow} ${styles.left}`}>‹</button>
-          <button onClick={next} className={`${styles.arrow} ${styles.right}`}>›</button>
-
+          <button
+            className={`${styles.arrowBtn} ${styles.arrowBtnRight}`}
+            onClick={next}
+          >
+            ›
+          </button>
         </div>
-          <div className={styles.modelButtons}>
-    <a href={models[activeModel].exploreLink} className={styles.btnExplore}>
-      EXPLORE THE MODEL
-    </a>
-    <a href={models[activeModel].discoverLink} className={styles.btnDiscover}>
-      DISCOVER MORE
-    </a>
-  </div>
 
+        {/* INFO */}
+        <div key={infoKey} className={styles.modelInfo}>
+          <h3 className={styles.modelName}>{models[active].title}</h3>
+          <p className={styles.modelDesc}>{models[active].desc}</p>
+        </div>
+
+        {/* TAB */}
+        <div className={styles.tabs}>
+          <span className={styles.activeTab}>{models[active].name}</span>
+        </div>
+
+        {/* BUTTONS */}
+        <div
+          className={`${styles.modelCtas} ${modInView ? styles.ctasVisible : ""}`}
+        >
+          <button
+            className={styles.ctaPrimary}
+            onClick={() => navigate(models[active].explorePath)}
+          >
+            EXPLORE THE MODEL
+          </button>
+
+          <button
+            className={styles.ctaOutline}
+            onClick={() => navigate(models[active].discoverPath)}
+          >
+            DISCOVER MORE
+          </button>
+        </div>
       </section>
-
     </div>
   );
 }
