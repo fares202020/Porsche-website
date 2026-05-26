@@ -2,6 +2,7 @@
   background: #f4f4f2;
   color: #111111;
   font-family: 'Helvetica Neue', Arial, sans-serif;
+  overflow-x: hidden;
 }
 
 .content {
@@ -22,6 +23,10 @@
   justify-content: space-between;
   gap: 18px;
   flex-wrap: wrap;
+}
+
+.pageHeader > div:first-child {
+  min-width: 0;
 }
 
 .eyebrow,
@@ -48,52 +53,7 @@
   font-size: 0.98rem;
   line-height: 1.7;
   max-width: 68ch;
-}
-
-.headerActions {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.primaryButton,
-.secondaryButton {
-  min-height: 44px;
-  padding: 0 18px;
-  border-radius: 8px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  font-size: 0.94rem;
-  font-weight: 700;
-  text-decoration: none;
-  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.primaryButton {
-  border: 1px solid #111111;
-  background: #111111;
-  color: #ffffff;
-}
-
-.primaryButton:hover {
-  background: #000000;
-  color: #ffffff;
-  transform: translateY(-1px);
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
-}
-
-.secondaryButton {
-  border: 1px solid #d7d7d7;
-  background: #ffffff;
-  color: #111111;
-}
-
-.secondaryButton:hover {
-  border-color: #111111;
-  color: #111111;
-  transform: translateY(-1px);
+  overflow-wrap: anywhere;
 }
 
 .statsGrid {
@@ -103,7 +63,6 @@
 }
 
 .statCard,
-.panel,
 .quickCard,
 .tablePanel {
   border: 1px solid #e4e4e4;
@@ -137,15 +96,6 @@
   font-size: 1rem;
 }
 
-.statDelta {
-  color: #11823b;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.78rem;
-  font-weight: 700;
-}
-
 .statLabel {
   color: #666666;
   font-size: 0.78rem;
@@ -160,13 +110,6 @@
   line-height: 1;
 }
 
-.insightsGrid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
-}
-
-.panel,
 .tablePanel {
   padding: 24px;
 }
@@ -185,107 +128,7 @@
   font-size: 1.12rem;
   line-height: 1.25;
   font-weight: 800;
-}
-
-.panelMetric {
-  min-height: 34px;
-  padding: 0 12px;
-  border-radius: 999px;
-  background: #f5f1e6;
-  color: #7d6412;
-  display: inline-flex;
-  align-items: center;
-  font-size: 0.84rem;
-  font-weight: 800;
-  white-space: nowrap;
-}
-
-.barList {
-  display: grid;
-  gap: 18px;
-}
-
-.barItem {
-  display: grid;
-  gap: 8px;
-}
-
-.barMeta {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  color: #111111;
-  font-size: 0.94rem;
-  font-weight: 700;
-}
-
-.barTrack {
-  height: 12px;
-  border-radius: 999px;
-  background: #eeeeee;
-  overflow: hidden;
-}
-
-.barTrack span {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, #111111 0%, #c9a400 100%);
-}
-
-.statusChart {
-  display: grid;
-  grid-template-columns: 160px minmax(0, 1fr);
-  align-items: center;
-  gap: 24px;
-}
-
-.donut {
-  width: 160px;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: conic-gradient(#111111 0 56%, #c9a400 56% 78%, #d7d7d7 78% 100%);
-  display: grid;
-  place-items: center;
-  position: relative;
-}
-
-.donut::after {
-  content: "";
-  position: absolute;
-  inset: 22px;
-  border-radius: inherit;
-  background: #ffffff;
-}
-
-.donut span {
-  position: relative;
-  z-index: 1;
-  color: #111111;
-  font-size: 1.5rem;
-  font-weight: 800;
-}
-
-.statusList {
-  display: grid;
-  gap: 12px;
-}
-
-.statusRow {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 10px;
-  color: #555555;
-  font-size: 0.95rem;
-  font-weight: 700;
-}
-
-.statusDot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  border: 1px solid transparent;
+  overflow-wrap: anywhere;
 }
 
 .quickGrid {
@@ -338,6 +181,7 @@
 .quickCard small {
   color: #666666;
   line-height: 1.5;
+  overflow-wrap: anywhere;
 }
 
 .quickArrow {
@@ -361,6 +205,7 @@
 
 .tableWrap {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .ordersTable {
@@ -433,16 +278,8 @@
   border-color: #f5cfd1;
 }
 
-.shipped {
-  background: #f1f1f1;
-  color: #555555;
-  border-color: #dedede;
-}
-
 @media (max-width: 991.98px) {
-  .statsGrid,
-  .insightsGrid,
-  .quickGrid {
+  .statsGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -452,8 +289,48 @@
 }
 
 @media (max-width: 767.98px) {
-  .statusChart {
+  .content {
+    padding: 32px 0 48px;
+  }
+
+  .container {
+    width: min(100% - 36px, 1180px);
+    gap: 18px;
+  }
+
+  .pageHeader {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .pageTitle {
+    font-size: 1.95rem;
+  }
+
+  .pageSubtitle {
+    font-size: 0.94rem;
+    line-height: 1.6;
+  }
+
+  .statsGrid {
     grid-template-columns: 1fr;
+  }
+
+  .statCard {
+    min-width: 0;
+  }
+
+  .tablePanel {
+    overflow: hidden;
+  }
+
+  .ordersTable {
+    min-width: 680px;
+  }
+
+  .ordersTable th,
+  .ordersTable td {
+    padding: 14px 12px;
   }
 }
 
@@ -464,22 +341,24 @@
 
   .container {
     width: min(100% - 32px, 1180px);
-    gap: 18px;
+    gap: 16px;
   }
 
-  .statsGrid,
-  .insightsGrid {
-    grid-template-columns: 1fr;
+  .eyebrow,
+  .panelEyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
   }
 
-  .headerActions,
-  .primaryButton,
-  .secondaryButton {
-    width: 100%;
+  .pageTitle {
+    font-size: 1.72rem;
+  }
+
+  .statValue {
+    font-size: 1.45rem;
   }
 
   .statCard,
-  .panel,
   .tablePanel,
   .quickCard {
     border-radius: 10px;
@@ -489,5 +368,52 @@
   .panelHeader {
     align-items: flex-start;
     flex-direction: column;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .quickCard {
+    min-height: 96px;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  .quickArrow {
+    display: none;
+  }
+
+  .tableWrap {
+    margin-inline: -20px;
+    padding-inline: 20px;
+  }
+
+  .ordersTable {
+    min-width: 640px;
+  }
+
+  .ordersTable th,
+  .ordersTable td {
+    padding: 13px 10px;
+  }
+
+  .statusBadge {
+    min-width: 86px;
+  }
+}
+
+@media (max-width: 380px) {
+  .container {
+    width: min(100% - 24px, 1180px);
+  }
+
+  .statCard,
+  .tablePanel,
+  .quickCard {
+    padding: 16px;
+  }
+
+  .tableWrap {
+    margin-inline: -16px;
+    padding-inline: 16px;
   }
 }

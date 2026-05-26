@@ -7,16 +7,13 @@ import cayenee from "../../assets/icons/filters_format(avif) (4).png";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";    
 
-import suv from "../../assets/icons/suv car.jpg";
-import sport from "../../assets/icons/sport car.webp";
-import electric from "../../assets/icons/electric car.jpg";
-import sedan from "../../assets/icons/sedan car.jpg";
+import suv from "../../assets/images/suv.avif";
+import sport from "../../assets/images/sport.jpg";
+import electric from "../../assets/images/electric.jpg";
+import sedan from "../../assets/images/sedan.jpeg";
 
 import taycanImg from "../../assets/images/Taycan_TurboS.avif";
 import macanImg from "../../assets/images/Macan_Electric.avif";
-import sceneMotorsport from "../../assets/images/scene1.jpg";
-import sceneExperience from "../../assets/images/scene3.jpg";
-import sceneFinder from "../../assets/images/scene7.jpg";
 
 import img911Carrera from "../../assets/images/911_Carrera.avif";
 import imgGT3RS from "../../assets/images/GT3_RS.avif";
@@ -592,48 +589,6 @@ export default function Home() {
           <a href="/shop" className={styles.btnOutlineDark}>
             Discover Macan Electric
           </a>
-        </div>
-      </section>
-
-      {/* STORY & LIFESTYLE GRID */}
-      <section className={styles.storiesSection}>
-        <h2 className={styles.storiesTitle}>The Porsche Experience</h2>
-        <p className={styles.storiesSubtitle}>Go beyond the driver's seat and discover our world.</p>
-        <div className={styles.storiesGrid}>
-          
-          <div className={styles.storyCard}>
-            <img src={sceneMotorsport} alt="Motorsport Heritage" className={styles.storyCardImg} />
-            <div className={styles.storyCardOverlay}></div>
-            <div className={styles.storyCardContent}>
-              <span className={styles.storyCategory}>HERITAGE</span>
-              <h3 className={styles.storyTitleText}>Motorsport Legacy</h3>
-              <p className={styles.storyDesc}>Explore over seven decades of racing success and engineering innovation.</p>
-              <a href="/about" className={styles.storyLink}>Learn More &rarr;</a>
-            </div>
-          </div>
-
-          <div className={styles.storyCard}>
-            <img src={sceneExperience} alt="Porsche Experience" className={styles.storyCardImg} />
-            <div className={styles.storyCardOverlay}></div>
-            <div className={styles.storyCardContent}>
-              <span className={styles.storyCategory}>COMMUNITY</span>
-              <h3 className={styles.storyTitleText}>Porsche Experience Centers</h3>
-              <p className={styles.storyDesc}>Test your skills and push our sports cars to the limit on dedicated tracks.</p>
-              <a href="/about" className={styles.storyLink}>Book Track Day &rarr;</a>
-            </div>
-          </div>
-
-          <div className={styles.storyCard}>
-            <img src={sceneFinder} alt="Porsche Finder" className={styles.storyCardImg} />
-            <div className={styles.storyCardOverlay}></div>
-            <div className={styles.storyCardContent}>
-              <span className={styles.storyCategory}>SERVICES</span>
-              <h3 className={styles.storyTitleText}>Porsche Finder</h3>
-              <p className={styles.storyDesc}>Search our official database for available new and pre-owned Porsche inventory.</p>
-              <a href="/shop" className={styles.storyLink}>Search Inventory &rarr;</a>
-            </div>
-          </div>
-
         </div>
       </section>
 
