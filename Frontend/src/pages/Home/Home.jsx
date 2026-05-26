@@ -416,15 +416,6 @@ export default function Home() {
                   <path d="M16.4133 6L15.5553 6.92298L19.6739 11.3473H2V12.6527H19.6739L15.5541 17.077L16.4145 18L22 12L16.4145 6H16.4133Z" fill="currentColor"></path>
                 </svg>
               </a>
-              <a
-                className={styles.btnBrochure}
-                href={displayedModel.brochureLink}
-              >
-                <span>Download brochure</span>
-                <svg aria-hidden="true" className={styles.btnArrowIcon} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M20 19V22H4V19H5V21H19V19H20ZM17.853 12.854L17.146 12.147L12.5 16.793V3H11.5V16.793L6.854 12.147L6.147 12.853L12 18.707L17.854 12.853L17.853 12.854Z" fill="currentColor"></path>
-                </svg>
-              </a>
             </div>
           </MotionDiv>
         </div>
