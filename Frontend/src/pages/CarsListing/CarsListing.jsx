@@ -10,7 +10,7 @@ const images = import.meta.glob('../../assets/images/*', { eager: true });
 
 const imageMap = Object.fromEntries(
   Object.entries(images).map(([path, module]) => {
-    const filename = path.split('/').pop().replace('.png', '');
+    const filename = path.split('/').pop().replace(/\.[^.]+$/, '');
     return [filename, module.default];
   })
 );
