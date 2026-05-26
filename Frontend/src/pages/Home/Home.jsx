@@ -181,23 +181,141 @@ export default function Home() {
   };
 
   const slidePageVariants = {
+    enter: {
+      opacity: 0,
+    },
+    center: {
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+        ease: "easeInOut",
+      },
+    },
+    exit: {
+      opacity: 0,
+      transition: {
+        duration: 0.5,
+        ease: "easeInOut",
+      },
+    },
+  };
+
+  const slideTextVariants = {
     enter: (direction) => ({
-      x: direction > 0 ? "100%" : "-100%",
+      x: direction > 0 ? 100 : -100,
+      opacity: 0,
     }),
     center: {
-      x: "0%",
+      x: 0,
+      opacity: 1,
       transition: {
-        duration: 0.48,
-        ease: [0.22, 1, 0.36, 1],
+        duration: 0.8,
+        ease: [0.16, 1, 0.3, 1],
       },
     },
     exit: (direction) => ({
-      x: direction > 0 ? "-100%" : "100%",
+      x: direction > 0 ? -100 : 100,
+      opacity: 0,
       transition: {
-        duration: 0.48,
-        ease: [0.22, 1, 0.36, 1],
+        duration: 0.6,
+        ease: [0.16, 1, 0.3, 1],
       },
     }),
+  };
+
+  const slideCarVariants = {
+    enter: (direction) => ({
+      x: direction > 0 ? 300 : -300,
+      scale: 0.92,
+      opacity: 0,
+    }),
+    center: {
+      x: 0,
+      scale: 1,
+      opacity: 1,
+      transition: {
+        duration: 0.95,
+        ease: [0.16, 1, 0.3, 1],
+      },
+    },
+    exit: (direction) => ({
+      x: direction > 0 ? -300 : 300,
+      scale: 0.92,
+      opacity: 0,
+      transition: {
+        duration: 0.7,
+        ease: [0.16, 1, 0.3, 1],
+      },
+    }),
+  };
+
+  const previewLeftVariants = {
+    enter: (direction) => ({
+      x: direction > 0 ? 200 : -200,
+      opacity: 0,
+    }),
+    center: {
+      x: 0,
+      opacity: 0.18,
+      transition: {
+        duration: 0.95,
+        ease: [0.16, 1, 0.3, 1],
+      },
+    },
+    exit: (direction) => ({
+      x: direction > 0 ? -200 : 200,
+      opacity: 0,
+      transition: {
+        duration: 0.7,
+        ease: [0.16, 1, 0.3, 1],
+      },
+    }),
+  };
+
+  const previewRightVariants = {
+    enter: (direction) => ({
+      x: direction > 0 ? 200 : -200,
+      opacity: 0,
+    }),
+    center: {
+      x: 0,
+      opacity: 0.18,
+      transition: {
+        duration: 0.95,
+        ease: [0.16, 1, 0.3, 1],
+      },
+    },
+    exit: (direction) => ({
+      x: direction > 0 ? -200 : 200,
+      opacity: 0,
+      transition: {
+        duration: 0.7,
+        ease: [0.16, 1, 0.3, 1],
+      },
+    }),
+  };
+
+  const slideChildrenVariants = {
+    enter: {
+      y: 20,
+      opacity: 0,
+    },
+    center: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.8,
+        ease: [0.16, 1, 0.3, 1],
+      },
+    },
+    exit: {
+      y: 10,
+      opacity: 0,
+      transition: {
+        duration: 0.5,
+        ease: [0.16, 1, 0.3, 1],
+      },
+    },
   };
 
   const renderGallerySlide = (slideIndex) => {
@@ -210,7 +328,7 @@ export default function Home() {
 
     return (
       <MotionDiv
-        key={`${slideIndex}-${subTabs[slideIndex]}`}
+        key={slideIndex}
         className={styles.gallerySlideActive}
         variants={slidePageVariants}
         custom={slideDirection}
@@ -219,40 +337,60 @@ export default function Home() {
         exit="exit"
       >
         <div className={styles.slideStage}>
-          <div className={styles.slideTexts}>
+          <MotionDiv className={styles.slideTexts} variants={slideTextVariants} custom={slideDirection}>
             <div className={styles.slideLogoContainer}>
               <h2 className={styles.slideTitle}>{displayedSlide.title}</h2>
             </div>
             <p className={styles.slideSlogan}>{displayedSlide.slogan}</p>
-          </div>
+          </MotionDiv>
 
           <div className={styles.slideArtwork}>
-            <div className={`${styles.sidePreview} ${styles.sidePreviewLeft}`}>
+            <MotionDiv
+              className={`${styles.sidePreview} ${styles.sidePreviewLeft}`}
+              variants={previewLeftVariants}
+              custom={slideDirection}
+            >
               <img
                 alt={previousModel.name}
                 src={previousModel.img}
                 className={styles.sidePreviewImage}
               />
-            </div>
+            </MotionDiv>
 
-            <div className={styles.slideImageContainer}>
-              <img
-                alt={displayedModel.name}
-                src={displayedModel.img}
-                className={styles.slideImage}
-              />
-            </div>
+            <MotionDiv
+              className={styles.slideImageContainer}
+              variants={slideCarVariants}
+              custom={slideDirection}
+            >
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={displayedModel.name}
+                  alt={displayedModel.name}
+                  src={displayedModel.img}
+                  className={styles.slideImage}
+                  initial={{ opacity: 0, scale: 0.96 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.96 }}
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.4, ease: "easeInOut" }}
+                />
+              </AnimatePresence>
+            </MotionDiv>
 
-            <div className={`${styles.sidePreview} ${styles.sidePreviewRight}`}>
+            <MotionDiv
+              className={`${styles.sidePreview} ${styles.sidePreviewRight}`}
+              variants={previewRightVariants}
+              custom={slideDirection}
+            >
               <img
                 alt={nextModel.name}
                 src={nextModel.img}
                 className={styles.sidePreviewImage}
               />
-            </div>
+            </MotionDiv>
           </div>
 
-          <div className={styles.slideChildrenContainer}>
+          <MotionDiv className={styles.slideChildrenContainer} variants={slideChildrenVariants}>
             <div className={styles.tabListWrapper}>
               <ul className={styles.tabList}>
                 {displayedSlide.submodels.map((sub, idx) => (
@@ -288,7 +426,7 @@ export default function Home() {
                 </svg>
               </a>
             </div>
-          </div>
+          </MotionDiv>
         </div>
       </MotionDiv>
     );
@@ -334,7 +472,8 @@ export default function Home() {
 
       {/* CATEGORIES */}
       <section className={styles.categories}>
-        <h2>Shop by Category</h2>
+        <span className={styles.categorySub}>Explore the Range</span>
+        <h2 className={styles.categoryTitle}>Shop by Category</h2>
 
         <div className={styles.categoryGrid}>
           {categories.map((cat) => (
@@ -348,8 +487,13 @@ export default function Home() {
               <div className={styles.overlay}></div>
 
               <div className={styles.categoryInfo}>
-                <span>{cat.label}</span>
-                <span>&rarr;</span>
+                <h3 className={styles.categoryLabel}>{cat.label}</h3>
+                <span className={styles.categoryAction}>
+                  Explore Range 
+                  <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ transition: 'transform 0.3s ease' }}>
+                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </span>
               </div>
             </Link>
           ))}
