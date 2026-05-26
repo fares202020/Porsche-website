@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom"; // Add this import
 import { AnimatePresence, motion, useInView } from "framer-motion";
 import styles from "./Home.module.css";
-import pv from "../../assets/icons/Porsche 911 GT3 RS.mp4";
-import cayenee from "../../assets/icons/filters_format(avif) (4).png";
+import pv from "../../assets/videos/porsche-911-gt3-rs.mp4";
+import cayenneCoupeImg from "../../assets/images/cayenne-coupe.png";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";    
 
@@ -17,7 +17,7 @@ import macanImg from "../../assets/images/Macan_Electric.avif";
 
 import img911Carrera from "../../assets/images/911_Carrera.avif";
 import imgGT3RS from "../../assets/images/GT3_RS.avif";
-import imgCayenneSUV from "../../assets/icons/CD4764533C824EF4AFD953F2CA0537A9_4DF7E0D5F2F8424F8BA2FB06447A4EB4_CY24J5BIX0010-cayenne-side.png";
+import imgCayenneSUV from "../../assets/images/cayenne-side.png";
 import imgTaycanBase from "../../assets/images/Taycan.avif";
 import imgMacanGTS from "../../assets/images/Macan_GTS.avif";
 
@@ -43,7 +43,7 @@ const gallerySlides = [
     slogan: "Dare to live more",
     logoText: "Cayenne",
     submodels: [
-      { name: "Cayenne Coupe", img: cayenee, exploreLink: "/shop", brochureLink: "#" },
+      { name: "Cayenne Coupe", img: cayenneCoupeImg, exploreLink: "/shop", brochureLink: "#" },
       { name: "Cayenne SUV", img: imgCayenneSUV, exploreLink: "/shop", brochureLink: "#" }
     ]
   },
