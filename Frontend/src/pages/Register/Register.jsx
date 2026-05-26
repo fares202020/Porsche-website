@@ -1,193 +1,186 @@
-import { useState } from 'react';
-import styles from './Register.module.css';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import AuthField from "../../components/Auth/AuthField";
+import AuthShell from "../../components/Auth/AuthShell";
+import authStyles from "../../components/Auth/AuthShell.module.css";
+import { validateRegister } from "../../components/Auth/authValidation";
+
+const initialValues = {
+  fullName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+  agreeToTerms: false,
+};
+
+const initialTouched = {
+  fullName: false,
+  email: false,
+  password: false,
+  confirmPassword: false,
+  agreeToTerms: false,
+};
 
 export default function Register() {
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    agreeToTerms: false,
-  });
-  const [emailError, setEmailError] = useState('');
-  const [showPasswordError, setShowPasswordError] = useState(false);
-  const [showConfirmPasswordError, setShowConfirmPasswordError] = useState(false);
-  // Only require 8 characters
-  const isPasswordValid = formData.password.length >= 8;
+  const [formData, setFormData] = useState(initialValues);
+  const [errors, setErrors] = useState(validateRegister(initialValues));
+  const [touched, setTouched] = useState(initialTouched);
+  const [submitted, setSubmitted] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const isVisible = (field) => submitted || touched[field];
 
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
+    const nextValues = {
+      ...formData,
+      [name]: type === "checkbox" ? checked : value,
+    };
 
-    setFormData((current) => ({
-      ...current,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
-    if (name === 'password') {
-      setShowPasswordError(false);
-    }
-    if (name === 'confirmPassword') {
-      setShowConfirmPasswordError(false);
-    }
-
-    // Email validation on change
-    if (name === 'email') {
-      if (!value.includes('@')) {
-        setEmailError('Enter a valid email address');
-      } else {
-        setEmailError('');
-      }
-    }
+    setFormData(nextValues);
+    setErrors(validateRegister(nextValues));
   };
 
-  // Show confirm password error on blur (e.g., pressing enter/tab out)
-  const handleConfirmPasswordBlur = () => {
-    if (formData.confirmPassword.length > 0 && formData.password !== formData.confirmPassword) {
-      setShowConfirmPasswordError(true);
-    }
-  };
+  const handleBlur = (event) => {
+    const { name } = event.target;
 
-  // Show password error on blur/enter if less than 8 characters
-  const handlePasswordBlur = () => {
-    if (formData.password.length > 0 && formData.password.length < 8) {
-      setShowPasswordError(true);
-    }
+    setTouched((current) => ({ ...current, [name]: true }));
+    setErrors(validateRegister(formData));
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Final email validation on submit
-    if (!formData.email.includes('@')) {
-      setEmailError('Enter a valid email address');
+
+    const nextErrors = validateRegister(formData);
+    setSubmitted(true);
+    setTouched({
+      fullName: true,
+      email: true,
+      password: true,
+      confirmPassword: true,
+      agreeToTerms: true,
+    });
+    setErrors(nextErrors);
+
+    if (Object.values(nextErrors).some(Boolean)) {
       return;
     }
-    // Only check password length
-    if (formData.password.length < 8) {
-      setShowPasswordError(true);
-      return;
-    }
-    // Confirm password match validation
-    if (formData.password !== formData.confirmPassword) {
-      setShowConfirmPasswordError(true);
-      return;
-    }
-    // ...existing code for further submit logic...
   };
 
   return (
-    <div className={`${styles.page} d-flex flex-column min-vh-100`}>
-      <main className={`${styles.content} flex-grow-1 d-flex justify-content-center align-items-center px-3 py-5`}>
-        <form className={`${styles.card} bg-white`} onSubmit={handleSubmit}>
-          <h2 className="text-center mb-4">Register</h2>
+    <AuthShell
+      title="Register"
+      subtitle="Create your Porsche account to save favorites, manage details, and follow your journey."
+    >
+      <form className={authStyles.form} onSubmit={handleSubmit} noValidate>
+        <div className={authStyles.fieldGroup}>
+          <AuthField
+            id="register-full-name"
+            label="Full Name"
+            name="fullName"
+            type="text"
+            value={formData.fullName}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            placeholder="Enter your full name"
+            iconClass="fa-regular fa-user"
+            error={isVisible("fullName") ? errors.fullName : ""}
+            autoComplete="name"
+          />
 
-          <div className="mb-4">
-            <label htmlFor="fullName" className={`form-label fw-semibold mb-2 ${styles.label}`}>Full Name</label>
-            <div className={`input-group ${styles.field}`}>
-              <span className="input-group-text bg-light border-end-0">
-                <i className={`fa-regular fa-user ${styles.icon}`}></i>
-              </span>
-              <input
-                id="fullName"
-                name="fullName"
-                type="text"
-                className={`form-control bg-light border-start-0 ${styles.input}`}
-                placeholder="Username"
-                value={formData.fullName}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
+          <AuthField
+            id="register-email"
+            label="Email Address"
+            name="email"
+            type="email"
+            value={formData.email}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            placeholder="you@example.com"
+            iconClass="fa-regular fa-envelope"
+            error={isVisible("email") ? errors.email : ""}
+            autoComplete="email"
+            inputMode="email"
+          />
 
-          <div className="mb-4">
-            <label htmlFor="registerEmail" className={`form-label fw-semibold mb-2 ${styles.label}`}>Email Address</label>
-            <div className={`input-group ${styles.field}`}>
-              <span className="input-group-text bg-light border-end-0">
-                <i className={`fa-regular fa-envelope ${styles.icon}`}></i>
-              </span>
-              <input
-                id="registerEmail"
-                name="email"
-                type="email"
-                className={`form-control bg-light border-start-0 ${styles.input}`}
-                placeholder="you@example.com"
-                value={formData.email}
-                onChange={handleChange}
-                aria-describedby="emailHelp"
-              />
-            </div>
-            {emailError && (
-              <div className="text-danger small mt-1" id="emailHelp">{emailError}</div>
-            )}
-          </div>
+          <AuthField
+            id="register-password"
+            label="Password"
+            name="password"
+            type={showPassword ? "text" : "password"}
+            value={formData.password}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            placeholder="Create a password"
+            iconClass="fa-solid fa-lock"
+            error={isVisible("password") ? errors.password : ""}
+            autoComplete="new-password"
+            helperText="Use at least 8 characters."
+            showToggle
+            isPasswordVisible={showPassword}
+            onTogglePasswordVisibility={() => setShowPassword((current) => !current)}
+          />
 
-          <div className="mb-4">
-            <label htmlFor="registerPassword" className={`form-label fw-semibold mb-2 ${styles.label}`}>Password</label>
-            <div className={`input-group ${styles.field}`}>
-              <span className="input-group-text bg-light border-end-0">
-                <i className={`fa-solid fa-lock ${styles.icon}`}></i>
-              </span>
-              <input
-                id="registerPassword"
-                name="password"
-                type="password"
-                className={`form-control bg-light border-start-0 ${styles.input}`}
-                placeholder="••••••••••••"
-                value={formData.password}
-                onChange={handleChange}
-                onBlur={handlePasswordBlur}
-                aria-describedby="passwordHelp"
-              />
-            </div>
-            {showPasswordError && formData.password.length < 8 && (
-              <div className="text-danger small mt-1" id="passwordHelp">Password must be at least 8 characters.</div>
-            )}
-          </div>
+          <AuthField
+            id="register-confirm-password"
+            label="Confirm Password"
+            name="confirmPassword"
+            type={showConfirmPassword ? "text" : "password"}
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            placeholder="Confirm your password"
+            iconClass="fa-solid fa-lock"
+            error={isVisible("confirmPassword") ? errors.confirmPassword : ""}
+            autoComplete="new-password"
+            showToggle
+            isPasswordVisible={showConfirmPassword}
+            onTogglePasswordVisibility={() =>
+              setShowConfirmPassword((current) => !current)
+            }
+          />
+        </div>
 
-          <div className="mb-4">
-            <label htmlFor="confirmPassword" className={`form-label fw-semibold mb-2 ${styles.label}`}>Confirm Password</label>
-            <div className={`input-group ${styles.field}`}>
-              <span className="input-group-text bg-light border-end-0">
-                <i className={`fa-solid fa-lock ${styles.icon}`}></i>
-              </span>
-              <input
-                id="confirmPassword"
-                name="confirmPassword"
-                type="password"
-                className={`form-control bg-light border-start-0 ${styles.input}`}
-                placeholder="••••••••••••"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                aria-describedby="confirmPasswordHelp"
-                onBlur={handleConfirmPasswordBlur}
-              />
-            </div>
-            {showConfirmPasswordError && formData.password !== formData.confirmPassword && (
-              <div className="text-danger small mt-1" id="confirmPasswordHelp">Passwords do not match.</div>
-            )}
-          </div>
-
-          <div className="form-check mb-4">
+        <div>
+          <div className={authStyles.checkboxRow}>
             <input
               id="termsCheck"
               name="agreeToTerms"
               type="checkbox"
-              className={`form-check-input ${styles.checkbox}`}
+              className={`form-check-input ${authStyles.checkboxInput}`}
               checked={formData.agreeToTerms}
               onChange={handleChange}
+              aria-invalid={Boolean(isVisible("agreeToTerms") && errors.agreeToTerms)}
+              aria-describedby={
+                isVisible("agreeToTerms") && errors.agreeToTerms ? "termsCheck-error" : undefined
+              }
             />
-            <label className={`form-check-label small ${styles.checkboxLabel}`} htmlFor="termsCheck">
-              I agree to the <span className={styles.termsText}>Terms of Service</span> and <span className={styles.termsText}>Privacy Policy</span>
+            <label className={authStyles.checkboxLabel} htmlFor="termsCheck">
+              I agree to the{" "}
+              <span className={authStyles.termsText}>Terms of Service</span> and{" "}
+              <span className={authStyles.termsText}>Privacy Policy</span>
             </label>
           </div>
 
-          <button type="submit" className={styles.button}>
-            Register
-          </button>
+          {isVisible("agreeToTerms") && errors.agreeToTerms ? (
+            <p className={authStyles.checkboxError} id="termsCheck-error" role="alert">
+              {errors.agreeToTerms}
+            </p>
+          ) : null}
+        </div>
 
-          <p className={`text-center mt-4 mb-0 small ${styles.signInText}`}>
-            Already have an account? <a href="/login" className={styles.signInLink}>Sign In</a>
-          </p>
-        </form>
-      </main>
-    </div>
+        <button type="submit" className={authStyles.submitButton}>
+          Create Account
+        </button>
+
+        <p className={authStyles.footerText}>
+          Already have an account?{" "}
+          <Link to="/login" className={authStyles.footerLink}>
+            Sign In
+          </Link>
+        </p>
+      </form>
+    </AuthShell>
   );
 }

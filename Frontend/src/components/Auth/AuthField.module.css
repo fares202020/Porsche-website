@@ -1,0 +1,95 @@
+.field {
+  display: grid;
+  gap: 10px;
+}
+
+.label {
+  color: #1b1b1b;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.inputGroup {
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  border: 1px solid #dfe2e5;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.inputGroup:focus-within {
+  border-color: #bdbdbd;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.04);
+}
+
+.inputGroupError {
+  border-color: #c26a6a;
+  background-color: #fff9f9;
+}
+
+.iconWrap {
+  width: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #5d5d5d;
+  flex: 0 0 auto;
+}
+
+.input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: #232323;
+  font-size: 0.95rem;
+  padding: 0.9rem 1rem 0.9rem 0;
+  box-shadow: none;
+}
+
+.input::placeholder {
+  color: #9b9b9b;
+}
+
+.input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.toggleButton {
+  width: 46px;
+  border: 0;
+  background: transparent;
+  color: #666666;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.toggleButton:hover {
+  color: #111111;
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.toggleButton:focus-visible {
+  outline: 2px solid rgba(0, 0, 0, 0.22);
+  outline-offset: -2px;
+}
+
+.helperText {
+  margin: 0;
+  color: #7d7d7d;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.errorText {
+  margin: 0;
+  color: #b24a4a;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
