@@ -11,7 +11,7 @@ export default function AuthShell({ title, subtitle, children }) {
             <header className={styles.header}>
               <p className={styles.eyebrow}>Porsche account</p>
               <h1 className={styles.title}>{title}</h1>
-              <p className={styles.subtitle}>{subtitle}</p>
+              {subtitle ? <p className={styles.subtitle}>{subtitle}</p> : null}
             </header>
 
             {children}

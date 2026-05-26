@@ -56,10 +56,7 @@ export default function Login() {
   };
 
   return (
-    <AuthShell
-      title="Login"
-      subtitle="Sign in to access your saved vehicles, profile, and order history."
-    >
+    <AuthShell title="Login">
       <form className={authStyles.form} onSubmit={handleSubmit} noValidate>
         <div className={authStyles.fieldGroup}>
           <AuthField
@@ -89,7 +86,6 @@ export default function Login() {
             iconClass="fa-solid fa-lock"
             error={isVisible("password") ? errors.password : ""}
             autoComplete="current-password"
-            helperText="Use the password associated with your Porsche account."
             showToggle
             isPasswordVisible={showPassword}
             onTogglePasswordVisibility={() => setShowPassword((current) => !current)}

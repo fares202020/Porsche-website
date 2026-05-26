@@ -69,10 +69,7 @@ export default function Register() {
   };
 
   return (
-    <AuthShell
-      title="Register"
-      subtitle="Create your Porsche account to save favorites, manage details, and follow your journey."
-    >
+    <AuthShell title="Register">
       <form className={authStyles.form} onSubmit={handleSubmit} noValidate>
         <div className={authStyles.fieldGroup}>
           <AuthField
@@ -116,7 +113,6 @@ export default function Register() {
             iconClass="fa-solid fa-lock"
             error={isVisible("password") ? errors.password : ""}
             autoComplete="new-password"
-            helperText="Use at least 8 characters."
             showToggle
             isPasswordVisible={showPassword}
             onTogglePasswordVisibility={() => setShowPassword((current) => !current)}

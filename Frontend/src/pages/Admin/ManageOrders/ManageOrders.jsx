@@ -28,7 +28,7 @@ const initialOrders = [
     email: 'michael@example.com',
     product: 'Macan Electric',
     amount: 85000,
-    status: 'Shipped',
+    status: 'Processing',
     date: 'Feb 26, 2026',
   },
   {
@@ -60,7 +60,7 @@ const initialOrders = [
   },
 ];
 
-const statusOptions = ['All', 'Processing', 'Completed', 'Shipped', 'Cancelled'];
+const statusOptions = ['All', 'Processing', 'Completed', 'Cancelled'];
 
 function formatCurrency(value) {
   return `$${value.toLocaleString()}`;

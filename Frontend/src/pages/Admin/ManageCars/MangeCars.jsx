@@ -279,6 +279,7 @@ function getVisibleError(submitted, touched, field, error) {
 
 export default function ManageCars() {
   const [cars, setCars] = useState(initialCars);
+  const [search, setSearch] = useState('');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingCarId, setEditingCarId] = useState(null);
   const [formData, setFormData] = useState(emptyCarForm);
@@ -291,6 +292,31 @@ export default function ManageCars() {
     () => cars.filter((car) => car.status === 'In Stock').length,
     [cars],
   );
+  const filteredCars = useMemo(() => {
+    const normalizedSearch = search.trim().toLowerCase();
+
+    if (!normalizedSearch) {
+      return cars;
+    }
+
+    return cars.filter((car) => {
+      const searchableValues = [
+        car.name,
+        car.make,
+        car.category,
+        String(car.year),
+        String(car.price),
+        car.description,
+        car.colors,
+        car.fuelType,
+        car.status,
+      ]
+        .join(' ')
+        .toLowerCase();
+
+      return searchableValues.includes(normalizedSearch);
+    });
+  }, [cars, search]);
 
   const dialogTitle = editingCarId ? 'Edit Car' : 'Add New Car';
 
@@ -527,6 +553,19 @@ export default function ManageCars() {
           </button>
         </header>
 
+        <section className={styles.controls} aria-label="Car filters">
+          <label className={styles.searchBox} htmlFor="admin-car-search">
+            <i className="fa-solid fa-magnifying-glass"></i>
+            <input
+              id="admin-car-search"
+              type="search"
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+              placeholder="Search by car name, category, year, or status..."
+            />
+          </label>
+        </section>
+
         <section className={styles.summaryGrid} aria-label="Inventory summary">
           <article className={styles.summaryCard}>
             <span>Total Cars</span>
@@ -557,7 +596,7 @@ export default function ManageCars() {
                 </tr>
               </thead>
               <tbody>
-                {cars.map((car) => (
+                {filteredCars.map((car) => (
                   <tr key={car.id}>
                     <td>
                       <img className={styles.carImage} src={car.image} alt={car.name} />
@@ -605,6 +644,10 @@ export default function ManageCars() {
               </tbody>
             </table>
           </div>
+
+          {filteredCars.length === 0 ? (
+            <div className={styles.emptyState}>No cars match your search.</div>
+          ) : null}
         </section>
       </div>
 

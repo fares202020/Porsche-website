@@ -222,12 +222,6 @@
   border-color: #f4e1a5;
 }
 
-.shipped {
-  background: #f1f1f1;
-  color: #555555;
-  border-color: #dedede;
-}
-
 .cancelled {
   background: #fdeff0;
   color: #a84646;

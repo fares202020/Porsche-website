@@ -5,16 +5,12 @@ import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/Navbar/Navbar";
 import styles from "./Profile.module.css";
 
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
 const initialProfileData = {
   fullName: "",
-  email: "you@example.com",
 };
 
 const initialProfileErrors = {
   fullName: "",
-  email: "",
 };
 
 const initialPasswordData = {
@@ -31,7 +27,6 @@ const initialPasswordErrors = {
 
 const initialProfileTouched = {
   fullName: false,
-  email: false,
 };
 
 const initialPasswordTouched = {
@@ -43,17 +38,10 @@ const initialPasswordTouched = {
 function validateProfileForm(values) {
   const nextErrors = {
     fullName: "",
-    email: "",
   };
 
   if (!values.fullName.trim()) {
     nextErrors.fullName = "Full name is required.";
-  }
-
-  if (!values.email.trim()) {
-    nextErrors.email = "Email address is required.";
-  } else if (!EMAIL_PATTERN.test(values.email.trim())) {
-    nextErrors.email = "Enter a valid email address.";
   }
 
   return nextErrors;
@@ -104,7 +92,6 @@ export default function Profile() {
 
   const displayName = profileData.fullName.trim() || "Account";
   const avatarLetter = displayName.charAt(0).toUpperCase();
-  const displayEmail = profileData.email.trim() || "you@example.com";
 
   const handleProfileChange = (event) => {
     const { name, value } = event.target;
@@ -129,7 +116,7 @@ export default function Profile() {
 
     const nextErrors = validateProfileForm(profileData);
     setProfileSubmitted(true);
-    setProfileTouched({ fullName: true, email: true });
+    setProfileTouched({ fullName: true });
     setProfileErrors(nextErrors);
 
     if (Object.values(nextErrors).some(Boolean)) {
@@ -189,9 +176,6 @@ export default function Profile() {
             <div>
               <p className={styles.eyebrow}>Account</p>
               <h1 className={styles.pageTitle}>My Profile</h1>
-              <p className={styles.pageSubtitle}>
-                Manage your account details in one organized place.
-              </p>
             </div>
           </header>
 
@@ -202,7 +186,6 @@ export default function Profile() {
                   {avatarLetter}
                 </div>
                 <h2 className={styles.identityName}>{displayName}</h2>
-                <p className={styles.identityEmail}>{displayEmail}</p>
               </div>
 
               <nav className={styles.nav} aria-label="Profile sections">
@@ -242,9 +225,6 @@ export default function Profile() {
                     <div>
                       <p className={styles.sectionEyebrow}>Profile details</p>
                       <h2 className={styles.sectionTitle}>Edit Profile</h2>
-                      <p className={styles.sectionSubtitle}>
-                        Update the name and email connected to your account.
-                      </p>
                     </div>
                   </div>
 
@@ -261,24 +241,7 @@ export default function Profile() {
                         placeholder="Enter your full name"
                         iconClass="fa-regular fa-user"
                         error={getVisibleError(profileSubmitted, profileTouched, "fullName", profileErrors.fullName)}
-                        helperText="This name will be shown on your account profile."
                         autoComplete="name"
-                      />
-
-                      <AuthField
-                        id="profile-email"
-                        label="Email Address"
-                        name="email"
-                        type="email"
-                        value={profileData.email}
-                        onChange={handleProfileChange}
-                        onBlur={handleProfileBlur}
-                        placeholder="you@example.com"
-                        iconClass="fa-regular fa-envelope"
-                        error={getVisibleError(profileSubmitted, profileTouched, "email", profileErrors.email)}
-                        helperText="We'll use this email for account communication."
-                        autoComplete="email"
-                        inputMode="email"
                       />
                     </div>
 
@@ -296,9 +259,6 @@ export default function Profile() {
                     <div>
                       <p className={styles.sectionEyebrow}>Security</p>
                       <h2 className={styles.sectionTitle}>Change Password</h2>
-                      <p className={styles.sectionSubtitle}>
-                        Choose a strong password and keep your current one confidential.
-                      </p>
                     </div>
                   </div>
 
@@ -315,7 +275,6 @@ export default function Profile() {
                         placeholder="Enter current password"
                         iconClass="fa-solid fa-lock"
                         error={getVisibleError(passwordSubmitted, passwordTouched, "currentPassword", passwordErrors.currentPassword)}
-                        helperText="Confirm your current password before updating it."
                         autoComplete="current-password"
                       />
 
@@ -330,7 +289,6 @@ export default function Profile() {
                         placeholder="Create a new password"
                         iconClass="fa-solid fa-lock"
                         error={getVisibleError(passwordSubmitted, passwordTouched, "newPassword", passwordErrors.newPassword)}
-                        helperText="Use at least 8 characters."
                         autoComplete="new-password"
                         showToggle
                         isPasswordVisible={showNewPassword}
@@ -348,7 +306,6 @@ export default function Profile() {
                         placeholder="Confirm the new password"
                         iconClass="fa-solid fa-lock"
                         error={getVisibleError(passwordSubmitted, passwordTouched, "confirmPassword", passwordErrors.confirmPassword)}
-                        helperText="This should match the new password exactly."
                         autoComplete="new-password"
                         showToggle
                         isPasswordVisible={showConfirmPassword}

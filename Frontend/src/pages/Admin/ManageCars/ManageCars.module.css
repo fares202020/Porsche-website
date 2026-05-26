@@ -50,6 +50,41 @@
   line-height: 1.1;
 }
 
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.searchBox {
+  width: min(430px, 100%);
+  min-height: 50px;
+  padding: 0 14px;
+  border: 1px solid #cfd4dc;
+  border-radius: 8px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #8a94a6;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.searchBox:focus-within {
+  border-color: #111111;
+  box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.08);
+}
+
+.searchBox input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #111111;
+  font-size: 0.92rem;
+}
+
 .primaryButton {
   min-height: 42px;
   padding: 0 18px;
@@ -106,6 +141,13 @@
 
 .tablePanel {
   overflow: hidden;
+}
+
+.emptyState {
+  padding: 24px;
+  color: #666666;
+  font-weight: 700;
+  text-align: center;
 }
 
 .tableWrap {
@@ -508,9 +550,14 @@
   }
 
   .header,
-  .titleRow {
+  .titleRow,
+  .controls {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .searchBox {
+    width: 100%;
   }
 
   .primaryButton {
