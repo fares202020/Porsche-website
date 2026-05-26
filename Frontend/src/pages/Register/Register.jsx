@@ -158,8 +158,13 @@ export default function Register() {
             />
             <label className={authStyles.checkboxLabel} htmlFor="termsCheck">
               I agree to the{" "}
-              <span className={authStyles.termsText}>Terms of Service</span> and{" "}
-              <span className={authStyles.termsText}>Privacy Policy</span>
+              <Link to="/terms-of-service" className={authStyles.policyLink}>
+                Terms of Service
+              </Link>{" "}
+              and{" "}
+              <Link to="/privacy-policy" className={authStyles.policyLink}>
+                Privacy Policy
+              </Link>
             </label>
           </div>
 

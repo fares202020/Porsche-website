@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styles from "./Footer.module.css";
 
 const footerSections = [
@@ -114,9 +115,9 @@ export default function Footer() {
       <div className={styles.footerBottom}>
         <p>&copy; 2026 Porsche. All rights reserved.</p>
         <div className={styles.legalLinks}>
-          <a href="/about">Privacy</a>
-          <a href="/about">Terms</a>
-          <a href="/about">Contact</a>
+          <Link to="/privacy-policy">Privacy</Link>
+          <Link to="/terms-of-service">Terms</Link>
+          <a href="mailto:support@porsche.com">Contact</a>
         </div>
       </div>
     </footer>

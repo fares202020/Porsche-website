@@ -167,6 +167,17 @@
   color: #333333;
 }
 
+.policyLink {
+  color: #111111;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.policyLink:hover {
+  color: #333333;
+}
+
 @media (max-width: 575.98px) {
   .card {
     border-radius: 16px;
