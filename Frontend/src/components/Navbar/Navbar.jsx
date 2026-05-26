@@ -77,12 +77,20 @@ export default function Navbar({ transparent = false }) {
               className={`${styles.dropdownMenu} dropdown-menu dropdown-menu-end`}
             >
               <li>
-                <a className="dropdown-item" href="/profile">
+                <a className={`${styles.dropdownItem} dropdown-item`} href="/profile">
+                  <i className="fa-regular fa-user"></i>
                   Profile
                 </a>
               </li>
               <li>
-                <a className="dropdown-item" href="/login">
+                <a className={`${styles.dropdownItem} dropdown-item`} href="/orders">
+                  <i className="fa-solid fa-receipt"></i>
+                  Orders
+                </a>
+              </li>
+              <li>
+                <a className={`${styles.dropdownItem} dropdown-item`} href="/login">
+                  <i className="fa-solid fa-right-to-bracket"></i>
                   Login
                 </a>
               </li>
@@ -90,10 +98,16 @@ export default function Navbar({ transparent = false }) {
           </div>
 
           <div className={styles.mobileAccountLinks}>
-            <a className={linkClass} href="/profile">
+            <a className={`${linkClass} ${styles.mobileAccountLink}`} href="/profile">
+              <i className="fa-regular fa-user"></i>
               Profile
             </a>
-            <a className={linkClass} href="/login">
+            <a className={`${linkClass} ${styles.mobileAccountLink}`} href="/orders">
+              <i className="fa-solid fa-receipt"></i>
+              Orders
+            </a>
+            <a className={`${linkClass} ${styles.mobileAccountLink}`} href="/login">
+              <i className="fa-solid fa-right-to-bracket"></i>
               Login
             </a>
           </div>
