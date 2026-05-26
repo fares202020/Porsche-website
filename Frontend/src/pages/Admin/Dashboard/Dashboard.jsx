@@ -21,7 +21,9 @@ const recentOrders = [
   {
     id: '503051001',
     customer: 'Sarah Johnson',
-    product: '911 GT3 + 911 Turbo',
+    product: '911 GT3',
+    color: 'Python Green',
+    wheelType: 'Wheel Type 3',
     amount: '$444,700',
     status: 'Completed',
     date: 'July 18, 2025',
@@ -29,7 +31,9 @@ const recentOrders = [
   {
     id: '633002000',
     customer: 'Michael Chen',
-    product: 'Macan + Taycan',
+    product: 'Macan',
+    color: 'Volcano Grey',
+    wheelType: 'Wheel Type 2',
     amount: '$156,300',
     status: 'Cancelled',
     date: 'March 2026',
@@ -38,6 +42,8 @@ const recentOrders = [
     id: '100000008',
     customer: 'Emily Davis',
     product: 'Macan Electric',
+    color: 'Provence',
+    wheelType: 'Wheel Type 1',
     amount: '$89,800',
     status: 'Processing',
     date: 'August 2024',
@@ -46,6 +52,8 @@ const recentOrders = [
     id: '100000009',
     customer: 'John Smith',
     product: '911 Carrera',
+    color: 'Arctic Grey',
+    wheelType: 'Wheel Type 3',
     amount: '$118,900',
     status: 'Completed',
     date: 'September 2024',
@@ -256,7 +264,12 @@ export default function Dashboard() {
                     <tr key={order.id}>
                       <td>{order.id}</td>
                       <td>{order.customer}</td>
-                      <td>{order.product}</td>
+                      <td>
+                        <div>{order.product}</div>
+                        <div className={styles.secondaryText}>
+                          {order.color} - {order.wheelType}
+                        </div>
+                      </td>
                       <td>{order.amount}</td>
                       <td>
                         <StatusBadge status={order.status} />
@@ -275,4 +288,3 @@ export default function Dashboard() {
     </div>
   );
 }
-

@@ -9,6 +9,8 @@ const initialOrders = [
     customer: 'John Smith',
     email: 'john@example.com',
     product: 'Porsche 911 Turbo S',
+    color: 'Black',
+    wheelType: 'Wheel Type 1',
     amount: 207000,
     status: 'Completed',
     date: 'Feb 28, 2026',
@@ -18,6 +20,8 @@ const initialOrders = [
     customer: 'Sarah Johnson',
     email: 'sarah@example.com',
     product: 'Taycan Turbo S',
+    color: 'Frozen Blue',
+    wheelType: 'Wheel Type 4',
     amount: 108490,
     status: 'Processing',
     date: 'Feb 27, 2026',
@@ -27,6 +31,8 @@ const initialOrders = [
     customer: 'Michael Chen',
     email: 'michael@example.com',
     product: 'Macan Electric',
+    color: 'Provence',
+    wheelType: 'Wheel Type 1',
     amount: 85000,
     status: 'Processing',
     date: 'Feb 26, 2026',
@@ -36,6 +42,8 @@ const initialOrders = [
     customer: 'Emily Davis',
     email: 'emily@example.com',
     product: '911 Carrera',
+    color: 'Arctic Grey',
+    wheelType: 'Wheel Type 3',
     amount: 95000,
     status: 'Completed',
     date: 'Feb 25, 2026',
@@ -45,6 +53,8 @@ const initialOrders = [
     customer: 'David Wilson',
     email: 'david@example.com',
     product: 'Macan GTS',
+    color: 'Volcano Grey',
+    wheelType: 'Wheel Type 2',
     amount: 115000,
     status: 'Processing',
     date: 'Feb 24, 2026',
@@ -54,6 +64,8 @@ const initialOrders = [
     customer: 'Lisa Anderson',
     email: 'lisa@example.com',
     product: 'Macan',
+    color: 'White',
+    wheelType: 'Wheel Type 2',
     amount: 72000,
     status: 'Cancelled',
     date: 'Feb 23, 2026',
@@ -187,7 +199,12 @@ export default function ManageOrders() {
                       <div className={styles.primaryText}>{order.customer}</div>
                       <div className={styles.secondaryText}>{order.email}</div>
                     </td>
-                    <td>{order.product}</td>
+                    <td>
+                      <div className={styles.primaryText}>{order.product}</div>
+                      <div className={styles.secondaryText}>
+                        {order.color} - {order.wheelType}
+                      </div>
+                    </td>
                     <td>{formatCurrency(order.amount)}</td>
                     <td>
                       <span className={`${styles.statusBadge} ${styles[order.status.toLowerCase()]}`}>

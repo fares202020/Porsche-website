@@ -7,69 +7,63 @@ const ORDERS = [
     date: "January 4, 2023",
     total: "$71,300",
     status: "Completed",
-    items: [{ name: "718 Boxster", qty: 1, price: "$71,300" }],
+    items: [{ name: "718 Boxster", color: "Guards Red", wheelType: "Wheel Type 1" }],
   },
   {
     id: "503051001",
     date: "July 18, 2025",
     total: "$444,700",
     status: "Completed",
-    items: [
-      { name: "911 GT3", qty: 1, price: "$230,500" },
-      { name: "911 Turbo", qty: 1, price: "$214,200" },
-    ],
+    items: [{ name: "911 GT3", color: "Python Green", wheelType: "Wheel Type 3" }],
   },
   {
     id: "633002000",
     date: "March 2026",
     total: "$156,300",
     status: "Cancelled",
-    items: [
-      { name: "Macan", qty: 1, price: "$64,100" },
-      { name: "Taycan", qty: 1, price: "$92,200" },
-    ],
+    items: [{ name: "Macan", color: "Volcano Grey", wheelType: "Wheel Type 2" }],
   },
   {
     id: "100000004",
     date: "April 2024",
     total: "$85,400",
     status: "Processing",
-    items: [{ name: "Cayenne", qty: 1, price: "$85,400" }],
+    items: [{ name: "Cayenne", color: "White", wheelType: "Wheel Type 4" }],
   },
   {
     id: "100000005",
     date: "May 2024",
     total: "$106,700",
     status: "Completed",
-    items: [{ name: "Panamera", qty: 1, price: "$106,700" }],
+    items: [{ name: "Panamera", color: "Black", wheelType: "Wheel Type 1" }],
   },
   {
     id: "100000006",
     date: "June 2024",
     total: "$73,500",
     status: "Cancelled",
-    items: [{ name: "718 Cayman", qty: 1, price: "$73,500" }],
+    items: [{ name: "718 Cayman", color: "GT Silver", wheelType: "Wheel Type 2" }],
   },
   {
     id: "100000007",
     date: "July 2024",
     total: "$103,400",
     status: "Completed",
-    items: [{ name: "Taycan Cross Turismo", qty: 1, price: "$103,400" }],
+    items: [{ name: "Taycan Cross Turismo", color: "Frozen Blue", wheelType: "Wheel Type 4" }],
   },
   {
     id: "100000008",
     date: "August 2024",
     total: "$89,800",
     status: "Processing",
-    items: [{ name: "Macan Electric", qty: 1, price: "$89,800" }],
+    items: [{ name: "Macan Electric", color: "Provence", wheelType: "Wheel Type 1" }],
   },
   {
     id: "100000009",
     date: "September 2024",
     total: "$118,900",
     status: "Completed",
-    items: [{ name: "911 Carrera", qty: 1, price: "$118,900" }],
+    items: [{ name: "911 Carrera", color: "Arctic Grey", wheelType: "Wheel Type 3" }],
   },
 ];
 
@@ -115,41 +109,34 @@ export default function OrderHistory({ showIntro = true }) {
         {paginatedOrders.map((order) => (
           <article key={order.id} className={styles.orderCard}>
             <div className={styles.orderTop}>
-              <div className={styles.orderMetaGrid}>
-                <div className={styles.metaItem}>
-                  <span className={styles.metaLabel}>Order ID</span>
-                  <span className={styles.metaValue}>{order.id}</span>
-                </div>
-                <div className={styles.metaItem}>
-                  <span className={styles.metaLabel}>Order date</span>
-                  <span className={styles.metaValue}>{order.date}</span>
-                </div>
-                <div className={styles.metaItem}>
-                  <span className={styles.metaLabel}>Total</span>
-                  <span className={styles.metaValue}>{order.total}</span>
-                </div>
+            <div className={styles.orderMetaGrid}>
+              <div className={styles.metaItem}>
+                <span className={styles.metaLabel}>Order ID</span>
+                <span className={styles.metaValue}>{order.id}</span>
               </div>
+              <div className={styles.metaItem}>
+                <span className={styles.metaLabel}>Order date</span>
+                <span className={styles.metaValue}>{order.date}</span>
+              </div>
+              <div className={styles.metaItem}>
+                <span className={styles.metaLabel}>Total</span>
+                <span className={styles.metaValue}>{order.total}</span>
+              </div>
+            </div>
 
               <StatusBadge status={order.status} />
             </div>
 
             <div className={styles.itemsBlock}>
-              <div className={styles.itemsTitle}>Items</div>
-              <div className={styles.itemsList}>
-                {order.items.map((item, index) => (
-                  <div key={`${order.id}-${item.name}`} className={styles.itemRowWrap}>
-                    <div className={styles.itemRow}>
-                      <div>
-                        <div className={styles.itemName}>{item.name}</div>
-                        <div className={styles.itemMeta}>Quantity: {item.qty}</div>
-                      </div>
-                      <div className={styles.itemPrice}>{item.price}</div>
-                    </div>
-                    {index < order.items.length - 1 ? <div className={styles.itemDivider} /> : null}
-                  </div>
-                ))}
+              <div className={styles.itemsTitle}>Item</div>
+            <div className={styles.itemsList}>
+              <div className={styles.itemRow}>
+                <div className={styles.itemName}>{order.items[0].name}</div>
+                <div className={styles.itemMeta}>Color: {order.items[0].color}</div>
+                <div className={styles.itemMeta}>Wheel type: {order.items[0].wheelType}</div>
               </div>
             </div>
+          </div>
           </article>
         ))}
       </div>

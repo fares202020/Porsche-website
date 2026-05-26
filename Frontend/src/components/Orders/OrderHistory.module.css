@@ -160,15 +160,9 @@
   display: grid;
 }
 
-.itemRowWrap {
-  display: grid;
-}
-
 .itemRow {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 12px 0;
+  display: block;
+  padding: 4px 0 0;
 }
 
 .itemName {
@@ -181,17 +175,7 @@
   color: #767676;
   font-size: 0.92rem;
   margin-top: 4px;
-}
-
-.itemPrice {
-  color: #111111;
-  font-weight: 700;
-  white-space: nowrap;
-}
-
-.itemDivider {
-  height: 1px;
-  background: #ededed;
+  line-height: 1.4;
 }
 
 .pagination {
@@ -256,6 +240,6 @@
   }
 
   .itemRow {
-    align-items: flex-start;
+    padding-top: 2px;
   }
 }
