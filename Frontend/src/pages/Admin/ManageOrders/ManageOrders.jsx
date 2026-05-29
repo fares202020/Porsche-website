@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import styles from './MangeOrders.module.css';
+import styles from './ManageOrders.module.css';
 
 const initialOrders = [
   {

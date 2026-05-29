@@ -10,7 +10,7 @@ import Register from "./pages/Register/Register";
 import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService/TermsOfService";
 import Dashboard from "./pages/Admin/Dashboard/Dashboard";
-import ManageCars from "./pages/Admin/ManageCars/MangeCars";
+import ManageCars from "./pages/Admin/ManageCars/ManageCars";
 import ManageUsers from "./pages/Admin/ManageUsers/ManageUsers";
 import ManageOrders from "./pages/Admin/ManageOrders/ManageOrders";
 import CookieConsent from "./components/Cookies/CookieConsent";
