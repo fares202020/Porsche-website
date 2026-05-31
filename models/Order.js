@@ -41,5 +41,13 @@ const orderSchema = new Schema({
     ref: 'User'
   }
 }, { timestamps: true });
+orderSchema.pre('save', async function (next) {
+  if (!this.orderId) {
+    const count = await mongoose.model('Order').countDocuments();
+    const year = new Date().getFullYear();
+    this.orderId = `ORD-${year}-${String(count + 1).padStart(3, '0')}`;
+  }
+  next();
+});
 
 module.exports = mongoose.model('Order', orderSchema);
